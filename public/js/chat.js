@@ -11,6 +11,7 @@ window.onload = function() {
     $('#send').click(sendPost)
     $('#load').click(loadPosts)
     $('#auto').click(toggleInterval)
+    $('#remo').click(removeChat)
   }
 
   function sendPost() {
@@ -23,7 +24,7 @@ window.onload = function() {
         $('.content').append('<div class="post you" name="'+(++last)+'"><b class="user" data-id="'+USER.id+'" data-name="'+USER.name+'">'+USER.name+'</b><span class="post-post" data-date="'+data.date+'">'+data.post+'</span></div>')
         $('textarea').attr('value','')
       } else {
-        // TODO: Error handling
+        if (data.error == "removed") window.location = "/"
       }
     })
   }
@@ -34,7 +35,7 @@ window.onload = function() {
         last : last
       }
     $.post(URL+"/load", data, function(data) {
-      if (data && data.length) {
+      if (data && data[0].user) {
         var i = 0
         for (; i < data.length; i++) {
           var post = data[i]
@@ -42,7 +43,7 @@ window.onload = function() {
         }
         last += i+1
       } else {
-        // TODO: Error handling
+        window.location = "/"
       }
     })
   }
@@ -53,6 +54,12 @@ window.onload = function() {
       loadPosts()
       I = setInterval(loadPosts, 5000)
     }
+  }
+
+  function removeChat() {
+    $.get(URL+"/remo", function(data) {
+      if (data == "ok") window.location = "/"
+    })
   }
 
 }

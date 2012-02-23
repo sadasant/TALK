@@ -142,4 +142,18 @@ talk.post('//:name/load', function(req, res) {
   }
 })
 
+// Remove Chat
+talk.get('//:name/remo', function(req, res) {
+  var chat = CHATS[req.params.name]
+    , user = req.session.user
+  if (chat && user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {
+    delete CHATS[req.params.name]
+    delete user.chats[user.chats.indexOf(chat.id)]
+    user.chats.filter(function(e) { return e })
+    return res.send('ok')
+  } else {
+    return res.render('error', { ERROR: 'FORBIDDEN' })
+  }
+})
+
 talk.listen(14774);
