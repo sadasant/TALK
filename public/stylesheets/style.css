@@ -1,7 +1,99 @@
 body {
-  padding: 50px;
+  padding: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 a {
-  color: #00b7ff;
+  color: #47ac39;
+}
+h1 {
+  color: #47ac39;
+  font-size: 55px;
+  text-shadow: 1px 1px 0 #333;
+}
+h1 a {
+  color: inherit;
+  text-decoration: none;
+}
+h2 {
+  color: #666;
+}
+#body,
+#footer {
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -17px;
+  text-align: center;
+  color: #444;
+  letter-spacing: 1px;
+}
+#body input,
+#footer input,
+#body textarea,
+#footer textarea {
+  width: 200px;
+  border: 1px solid #bbb;
+  border-radius: 3px;
+  color: #999;
+  text-shadow: 1px 1px 0 #fff;
+  margin: 1px;
+}
+#body input:hover,
+#footer input:hover {
+  color: #000;
+}
+#body textarea,
+#footer textarea {
+  width: 400px;
+  text-shadow: none;
+}
+#body .content,
+#footer .content {
+  margin-top: -15px;
+  text-align: left;
+  margin-left: 100px;
+  width: 400px;
+}
+#body .content .post,
+#footer .content .post {
+  width: 99%;
+  left: 0px;
+  display: block;
+  clear: left;
+}
+#body .content .post .user,
+#footer .content .post .user {
+  width: 50px;
+  background: #f9feda;
+  color: #47ac39;
+  font-weight: bold;
+  text-align: center;
+  float: left;
+  border: 1px solid #999;
+  border-radius: 3px;
+  margin-top: 11px;
+}
+#body .content .post .post-post,
+#footer .content .post .post-post {
+  padding: 10px;
+  width: 320px;
+  max-width: 320px;
+  overflow: hidden;
+  float: left;
+  margin-left: 3px;
+  color: #47ac39;
+  margin-bottom: 5px;
+}
+#body .content .you .user,
+#footer .content .you .user {
+  background: #e3fdd8;
+  color: #555;
+}
+#body .content .you .post-post,
+#footer .content .you .post-post {
+  color: #555;
+}
+#body .controls,
+#footer .controls {
+  margin-top: 50px;
 }

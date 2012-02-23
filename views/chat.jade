@@ -2,11 +2,12 @@ h1
   a(href="/") TALK:
   =" "+chat.name
 .content
-  - for (var i = 0; i < chat.posts.length; i++)
+  - for (var i = chat.posts.length-5; i < chat.posts.length; i++)
     - var post = chat.posts[i]
-    div.post(name=i)
-      b.user(data-id=post.user.id, data-name=post.user.name)= post.user.name
-      span.post-post(data-date= post.date)= post.post
+    div.post(name=i+1,class=post.user.id == user.id ? "you" : "")
+      .user(data-id=post.user.id, data-name=post.user.name)= post.user.name
+      .post-post(data-date= post.date)= post.post
+br
 .controls
   textarea#new_post
   br
