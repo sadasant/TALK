@@ -1,4 +1,6 @@
-h1= chat.name
+h1
+  a(href="/") TALK:
+  =" "+chat.name
 .content
   - for (var i = 0; i < chat.posts.length; i++)
     - var post = chat.posts[i]

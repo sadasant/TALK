@@ -1,7 +1,15 @@
-h1 TALK
+h1
+  a(href="/") TALK
 b CREATE
+br
+br
 form#create(action="/new", method="post")
-  b Name
+  b User Name
+  br
+  input(type="textbox", name="user_name")
+  br
+  br
+  b Chat Name
   br
   input(type="textbox", name="name")
   br
@@ -12,18 +20,3 @@ form#create(action="/new", method="post")
   br
   br
   input(type="submit", value="Create")
-br
-br
-b JOIN
-form#join(action="/join", method="post")
-  b Name
-  br
-  input(type="textbox", name="name")
-  br
-  br
-  b Password
-  br
-  input(type="password", name="password")
-  br
-  br
-  input(type="submit", value="Join")

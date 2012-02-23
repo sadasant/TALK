@@ -4,4 +4,9 @@ html
     - var title = title || 'talk'
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-  body!= body
+  body
+    != body
+    br
+    #footer
+      | By
+      a(href="http://sadasant.com/") Daniel R.

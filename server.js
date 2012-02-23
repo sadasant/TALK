@@ -39,6 +39,7 @@ talk.get('/', function(req, res) {
 talk.post('/new', function(req, res) {
   var name = req.body.name
     , pass = req.body.password
+    , user_name = req.body.user_name
     , user = req.session.user
   // Must be in
   if (!user) {
@@ -59,6 +60,7 @@ talk.post('/new', function(req, res) {
   , date : new Date()
   }
   CHATS[name] = chat
+  if (user_name) user.name = user_name
   user.chats.push(chat.id)
   res.redirect("//"+name)
 })
@@ -67,6 +69,7 @@ talk.post('/new', function(req, res) {
 talk.post('/join', function(req, res) {
   var name = req.body.name
     , pass = req.body.password
+    , user_name = req.body.user_name
     , user = req.session.user
     , chat = CHATS[name]
   if (!(user && chat)) {
@@ -77,6 +80,7 @@ talk.post('/join', function(req, res) {
   } else
   if (chat.pass === pass) {
     user.chats.push(chat.id)
+    if (user_name) user.name = user_name
     chat.users.push(user.id)
     res.redirect("//"+name)
   } else {
@@ -88,8 +92,21 @@ talk.post('/join', function(req, res) {
 talk.get('//:name', function(req, res) {
   var chat = CHATS[req.params.name]
     , user = req.session.user
-  if (chat && user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {
-    res.render('chat', { title : 'talk '+chat.name, chat : chat, user : user })
+  if (chat) {
+    if (user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {
+      return res.render('chat', { title : 'talk '+chat.name, chat : chat, user : user })
+    } else {
+      if (!user) {
+        var date = new Date()
+        req.session.user = {
+          chats : []
+        , id : COUNT.users
+        , name : "User_"+COUNT.users++
+        , date : date
+        }
+      }
+      return res.render('join', { chat : chat })
+    }
   } else {
     return res.render('error', { ERROR: 'FORBIDDEN' })
   }
