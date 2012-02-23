@@ -1,3 +1,6 @@
+// TALK / server.js
+// By Daniel R. (sadasant.com)
+// License: http://opensource.org/licenses/mit-license.php
 
 var express = require('express')
   , talk = module.exports = express.createServer()

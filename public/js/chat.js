@@ -1,8 +1,11 @@
-var URL = window.location.href
+// TALK / public / js / chat.js
+// By Daniel R. (sadasant.com)
+// License: http://opensource.org/licenses/mit-license.php
 
 window.onload = function() {
 
   var last = 0
+    , URL = window.location.href
     , I
 
   bindControls()
