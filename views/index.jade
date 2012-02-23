@@ -1,0 +1,29 @@
+h1 TALK
+b CREATE
+form#create(action="/new", method="post")
+  b Name
+  br
+  input(type="textbox", name="name")
+  br
+  br
+  b Password
+  br
+  input(type="password", name="password")
+  br
+  br
+  input(type="submit", value="Create")
+br
+br
+b JOIN
+form#join(action="/join", method="post")
+  b Name
+  br
+  input(type="textbox", name="name")
+  br
+  br
+  b Password
+  br
+  input(type="password", name="password")
+  br
+  br
+  input(type="submit", value="Join")
