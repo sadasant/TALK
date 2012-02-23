@@ -40,6 +40,10 @@ talk.post('/new', function(req, res) {
   var name = req.body.name
     , pass = req.body.password
     , user = req.session.user
+  // Must be in
+  if (!user) {
+    return res.render('error', { ERROR: 'FORBIDDEN' })
+  } else
   // This chat exists
   if (CHATS[name]) {
     // TODO: Send Error
