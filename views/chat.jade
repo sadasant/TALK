@@ -2,7 +2,8 @@ h1
   a(href="/") TALK:
   =" "+chat.name
 .content
-  - for (var i = chat.posts.length-5; i < chat.posts.length; i++)
+  - var len = chat.posts.length
+  - for (var i = len > 10 ? len-5 : 0; i < len; i++)
     - var post = chat.posts[i]
     div.post(name=i+1,class=post.user.id == user.id ? "you" : "")
       .user(data-id=post.user.id, data-name=post.user.name)= post.user.name
