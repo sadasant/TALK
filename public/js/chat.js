@@ -31,7 +31,6 @@ window.onload = function() {
     var data = {
         last : last
       }
-    console.log(data)
     $.post(URL+"/load", data, function(data) {
       if (data && data.length) {
         var i = 0
