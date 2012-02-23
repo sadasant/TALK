@@ -72,6 +72,7 @@ h2 {
   border: 1px solid #999;
   border-radius: 3px;
   margin-top: 11px;
+  overflow: hidden;
 }
 #body .content .post .post-post,
 #footer .content .post .post-post {

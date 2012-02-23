@@ -35,7 +35,7 @@ window.onload = function() {
         last : last
       }
     $.post(URL+"/load", data, function(data) {
-      if (data && data[0].user) {
+      if (data && (data[0] === undefined || data[0].user)) {
         var i = 0
         for (; i < data.length; i++) {
           var post = data[i]
