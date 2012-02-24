@@ -38,7 +38,8 @@ window.onload = function() {
   }
 
   function loadPosts() {
-    last = $('.content .post').last().attr('name')*1 || -1
+    last = $('.content .post').last().attr('name')
+    last = last == undefined ? -1 : last*1
     var data = {
         last : last+1
       }
