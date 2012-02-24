@@ -186,3 +186,17 @@ h2 {
 #footer .controls {
   margin-top: 0px;
 }
+#body #error,
+#footer #error {
+  background: #2d2d2d;
+  color: #444744;
+  font-weight: bold;
+  line-height: 30px;
+  width: 100px;
+  margin-left: 250px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  border-radius: 8px;
+}

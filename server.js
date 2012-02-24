@@ -5,6 +5,21 @@
 var express = require('express')
   , Markdown = require('node-markdown').Markdown
   , talk = module.exports = express.createServer()
+  , TODAY = (new Date()).getDay()
+  , CHATS = {}
+  , COUNT = { chats: 0, users: 0 }
+  , FORBIDDEN = ['new','join']
+
+// Reset Main Variables
+function reset(req, res, next) {
+  if ((new Date()).getDay() !== TODAY) {
+    TODAY = (new Date()).getDay()
+    CHATS = {}
+    COUNT = { chats: 0, users: 0 }
+    FORBIDDEN = ['new','join']
+  }
+  return next()
+}
 
 // conf
 talk.configure(function() {
@@ -21,13 +36,8 @@ talk.configure(function() {
   talk.use(express.errorHandler())
 })
 
-// Global Variables
-var CHATS = {}
-  , COUNT = { chats: 0, users: 0 }
-  , FORBIDDEN = ['new','join']
-
 // Index
-talk.get('/', function(req, res) {
+talk.get('/', reset, function(req, res) {
   if (!req.session.user) {
     var date = new Date()
     req.session.user = {
@@ -70,7 +80,7 @@ talk.post('/new', function(req, res) {
 })
 
 // Join Chat
-talk.post('/join', function(req, res) {
+talk.post('/join', reset, function(req, res) {
   var name = req.body.name
     , pass = req.body.password
     , user_name = req.body.user_name
@@ -98,6 +108,7 @@ talk.get('/:name', function(req, res) {
     , user = req.session.user
   if (chat) {
     if (user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {
+      console.log(chat.posts)
       return res.render('chat', { title : 'talk '+chat.name, chat : chat, user : user })
     } else {
       if (!user) {
@@ -117,19 +128,28 @@ talk.get('/:name', function(req, res) {
 })
 
 // New Post
-talk.post('/:name/post', function(req, res) {
+talk.post('/:name/post', reset, function(req, res) {
   var chat = CHATS[req.params.name]
     , user = req.session.user
     , new_post = req.body.post
     , date = req.body.date
   if (chat && user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id) && new_post) {
+    // Limit posts lenght
+    if (new_post.length > 512) {
+      return res.send({ error: 'too long'})
+    }
+    // Post Schema
     var post = {
       date : new Date(date)
     , post : Markdown(new_post.replace(/</g,'&#60;')).replace(/&amp;#60;/g,'&#60;')
     , user : user
     , pos  : chat.posts.length
     }
+    // Pushing new post
     chat.posts.push(post)
+    // removing too old posts
+    var removable = chat.posts.length - 6
+    if (removable > 0) delete chat.posts[removable-1]
     res.send('ok')
   } else {
     return res.render('error', { ERROR: 'FORBIDDEN' })
@@ -165,9 +185,9 @@ talk.get('/:name/remo', function(req, res) {
   }
 })
 
-// ???
-talk.get('//*', function(req, res) {
-  return res.redirect('/')
+// 404
+talk.error(function(req, res) {
+  return res.render('error', { ERROR: 'FORBIDDEN' })
 })
 
 talk.listen(14774);
