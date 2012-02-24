@@ -127,6 +127,7 @@ talk.post('/:name/post', function(req, res) {
       date : new Date(date)
     , post : new_post
     , user : user
+    , pos  : chat.posts.length
     }
     chat.posts.push(post)
     res.send('ok')
@@ -141,6 +142,9 @@ talk.post('/:name/load', function(req, res) {
     , user = req.session.user
     , last = req.body.last
   if (chat && user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {
+    if (last == 0 && chat.posts.length > 5) {
+      last += chat.posts.length - 5
+    }
     return res.send(chat.posts.slice(last))
   } else {
     return res.render('error', { ERROR: 'FORBIDDEN' })
