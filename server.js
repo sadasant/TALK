@@ -20,9 +20,10 @@ talk.configure(function() {
   //talk.use(express.errorHandler())
 })
 
-// CHATS
+// Global Variables
 var CHATS = {}
   , COUNT = { chats: 0, users: 0 }
+  , FORBIDDEN = ['new','join']
 
 // Index
 talk.get('/', function(req, res) {
@@ -45,7 +46,7 @@ talk.post('/new', function(req, res) {
     , user_name = req.body.user_name
     , user = req.session.user
   // Must be in
-  if (!user) {
+  if (!user || ~FORBIDDEN.indexOf(name)) {
     return res.render('error', { ERROR: 'FORBIDDEN' })
   } else
   // This chat exists
@@ -65,7 +66,7 @@ talk.post('/new', function(req, res) {
   CHATS[name] = chat
   if (user_name) user.name = user_name
   user.chats.push(chat.id)
-  res.redirect("//"+name)
+  res.redirect("/"+name)
 })
 
 // Join Chat
@@ -79,20 +80,20 @@ talk.post('/join', function(req, res) {
     return res.render('error', { ERROR: 'FORBIDDEN' })
   } else
   if (~user.chats.indexOf(chat.id)) {
-    return res.redirect("//"+name)
+    return res.redirect("/"+name)
   } else
   if (chat.pass === pass) {
     user.chats.push(chat.id)
     if (user_name) user.name = user_name
     chat.users.push(user.id)
-    res.redirect("//"+name)
+    res.redirect("/"+name)
   } else {
     return res.render('error', { ERROR: 'FORBIDDEN' })
   }
 })
 
 // Show Chat
-talk.get('//:name', function(req, res) {
+talk.get('/:name', function(req, res) {
   var chat = CHATS[req.params.name]
     , user = req.session.user
   if (chat) {
@@ -116,7 +117,7 @@ talk.get('//:name', function(req, res) {
 })
 
 // New Post
-talk.post('//:name/post', function(req, res) {
+talk.post('/:name/post', function(req, res) {
   var chat = CHATS[req.params.name]
     , user = req.session.user
     , new_post = req.body.post
@@ -135,7 +136,7 @@ talk.post('//:name/post', function(req, res) {
 })
 
 // Load Posts
-talk.post('//:name/load', function(req, res) {
+talk.post('/:name/load', function(req, res) {
   var chat = CHATS[req.params.name]
     , user = req.session.user
     , last = req.body.last
@@ -147,7 +148,7 @@ talk.post('//:name/load', function(req, res) {
 })
 
 // Remove Chat
-talk.get('//:name/remo', function(req, res) {
+talk.get('/:name/remo', function(req, res) {
   var chat = CHATS[req.params.name]
     , user = req.session.user
   if (chat && user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {

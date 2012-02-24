@@ -19,7 +19,6 @@ window.onload = function() {
   }
 
   function sendPost() {
-    last = $('.content .post').last().attr('name')*1 || 0
     var data = {
       post : $('textarea').val()
     , date : new Date().toString()
@@ -44,9 +43,7 @@ window.onload = function() {
         var i = 0
         for (; i < data.length; i++) {
           var post = data[i]
-            , date = (new Date(post.date)).toString().split(' ')
-          date = date[4] + ' ' + date[6]
-          $('.content').append('<div class="post '+(USER.id == post.user.id ? 'you' : '')+'" name="'+(last+i+1)+'"><div class="user" data-id="'+post.user.id+'" data-name="'+post.user.name+'">'+post.user.name+' <small class="date">'+date+'</small></div><div class="post-post" data-date="'+post.date+'">'+post.post+'</div></div>')
+          $('.content').append('<div class="post '+(USER.id == post.user.id ? 'you' : '')+'" name="'+(last+i+1)+'"><div class="user" data-id="'+post.user.id+'" data-name="'+post.user.name+'">'+post.user.name+' <small class="date">'+(new Date(post.date)).toString().split(' ')[4]+'</small></div><div class="post-post" data-date="'+post.date+'">'+post.post+'</div></div>')
         }
         last += i+1
       } else {
