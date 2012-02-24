@@ -26,7 +26,7 @@ window.onload = function() {
     $.post(URL+"/post", data, function(data) {
       if (data === 'ok') {
         $('textarea').attr('value','')
-        if (!I) loadPosts()
+        loadPosts()
       } else {
         if (data.error == "removed") window.location = "/"
       }
@@ -34,6 +34,7 @@ window.onload = function() {
   }
 
   function loadPosts() {
+    if (I) return
     last = $('.content .post').last().attr('name')
     last = last == undefined ? -1 : last*1
     var data = {

@@ -3,6 +3,7 @@
 // License: http://opensource.org/licenses/mit-license.php
 
 var express = require('express')
+  , Markdown = require('node-markdown').Markdown
   , talk = module.exports = express.createServer()
 
 // conf
@@ -125,7 +126,7 @@ talk.post('/:name/post', function(req, res) {
   if (chat && user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id) && new_post) {
     var post = {
       date : new Date(date)
-    , post : new_post
+    , post : Markdown(new_post.replace(/</g,'&#60;')).replace(/&amp;#60;/g,'&#60;')
     , user : user
     , pos  : chat.posts.length
     }
