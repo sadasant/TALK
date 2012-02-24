@@ -127,7 +127,7 @@ talk.post('//:name/post', function(req, res) {
     , user : user
     }
     chat.posts.push(post)
-    res.send(post)
+    res.send('ok')
   } else {
     return res.render('error', { ERROR: 'FORBIDDEN' })
   }

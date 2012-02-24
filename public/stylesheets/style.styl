@@ -1,4 +1,5 @@
 body
+  background #333
   padding 0
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
 a
@@ -7,13 +8,14 @@ a
 h1
   color #47ac39
   font-size 55px
-  text-shadow 1px 1px 0 #333
+  text-shadow 1px 1px 0 #000
   a
     color inherit
     text-decoration none
 
 h2
   color #666
+  text-shadow 1px 1px 0 #000
 
 #body,#footer
   width 600px
@@ -21,55 +23,78 @@ h2
   margin-right auto
   margin-top -17px
   text-align center
-  color #444
+  color #ddd
   letter-spacing 1px
   input, textarea
+    background #2d2d2d
     width 200px
-    border 1px solid #bbb
-    border-radius 3px
-    color #999
-    text-shadow 1px 1px 0 white
+    border 1px solid #444
+    border-top 1px solid #555
+    border-radius 8px
+    color #ddd
     margin 1px
-  input:hover
-    color #000
   textarea
     width 400px
     text-shadow none
+  input[type="button"], input[type="submit"]
+    color #222
+    font-weight bold
+    text-shadow 1px 1px 0 #444
+    background #393939
+    border 1px solid #444
+    border-top 1px solid #555
+    cursor pointer
+    cursor hand
+    padding 3px 10px
+    width auto
+    line-height 20px
+    font-size 14px
+    letter-spacing 2px
+    border-radius 5px
+  input[type="button"]:hover, input[type="submit"]:hover
+    background #444744
+    border 1px solid #555
+    border-top 1px solid #666
   .content
     margin-top -15px
     text-align left
     margin-left 100px
     width 400px
     .post
-      width 99%
-      left 0px
-      display block
-      clear left
       .user
-        width 50px
-        background #F9FEDA
+        width 380px
+        background #444
         color #47ac39
         font-weight bold
         text-align center
-        float left
-        border 1px solid #999
-        border-radius 3px
+        border 1px solid #444
+        border-radius 3px 3px 0 0
         margin-top 11px
         overflow hidden
+        text-align left
+        padding 3px 10px
+        .date
+          float right
+          margin-top 3px
+          font-weight normal
+          font-size 11px
+          opacity .5
       .post-post
+        background #333
         padding 10px
-        width 320px
-        max-width 320px
+        width 380px
+        border 1px solid #444
+        border-radius 0 0 3px 3px
+        border-top 0
         overflow hidden
-        float left
-        margin-left 3px
         color #47ac39
-        margin-bottom 5px
     .you
       .user
-        background #E3FDD8
-        color #555
+        background #222
+        border-color #222
+        color #ddd
       .post-post
-        color #555
+        border-color #222
+        color #ddd
   .controls
-    margin-top 50px
+    margin-top 0px
