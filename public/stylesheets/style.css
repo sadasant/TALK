@@ -117,7 +117,7 @@ h2 {
 #footer .content .you .user {
   background: #222;
   border-color: #222;
-  color: #ddd;
+  color: #ddd !important;
 }
 #body .content .you .post-post,
 #footer .content .you .post-post {
