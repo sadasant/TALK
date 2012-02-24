@@ -18,4 +18,6 @@
 
 Test it live here: <http://talk.nodester.com/>
 
+*Author: [Daniel R.](http://sadasant.com/)*
+
 *License: [MIT](http://opensource.org/licenses/mit-license.php)*
