@@ -48,7 +48,7 @@ window.onload = function() {
     var data = {
         last : last+1
       }
-    $('#error').html('loading...')
+    if (!I) $('#error').html('loading...')
     $.post(URL+"/load", data, function(data) {
       if (data && (data[0] === undefined || data[0].user)) {
         var i = 0
