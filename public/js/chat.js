@@ -24,10 +24,11 @@ window.onload = function() {
     , date : new Date().toString()
     }
     $.post(URL+"/post", data, function(data) {
-      console.log(data)
       if (data === 'ok') {
+        clearInterval(I)
         $('textarea').attr('value','')
         loadPosts()
+        I = setInterval(loadPosts, 3000)
       } else {
         if (data.error == "removed") window.location = "/"
       }
