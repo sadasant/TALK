@@ -15,6 +15,7 @@ window.onload = function() {
     $('#load').click(loadPosts)
     $('#auto').click(toggleInterval)
     $('#remo').click(removeChat)
+    loadPosts()
   }
 
   function sendPost() {
