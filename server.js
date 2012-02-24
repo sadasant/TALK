@@ -120,9 +120,10 @@ talk.post('//:name/post', function(req, res) {
   var chat = CHATS[req.params.name]
     , user = req.session.user
     , new_post = req.body.post
+    , date = req.body.date
   if (chat && user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id) && new_post) {
     var post = {
-      date : new Date()
+      date : new Date(date)
     , post : new_post
     , user : user
     }
