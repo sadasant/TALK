@@ -20,15 +20,12 @@ window.onload = function() {
   }
 
   function sendPost() {
-    if (busy) return
-    busy = true
     var data = {
       post : $('textarea').val()
     , date : new Date().toString()
     }
     $('#error').html('loading...')
     $.post(URL+"/post", data, function(data) {
-      busy = false
       if (data === 'ok') {
         $('textarea').val('')
         if (!I) loadPosts()
