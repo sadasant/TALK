@@ -1,6 +1,6 @@
 # TALK
 
-**TALK** is a simple web system for creating private chats aimed to be the simpliest way to chat over slow and unstable networks.
+**TALK** is a simple web system for creating private chats aimed to be the simpliest way to chat over slow and unstable network connections.
 
 ### Features
 
