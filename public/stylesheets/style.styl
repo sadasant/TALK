@@ -1,3 +1,12 @@
+vendors = webkit moz o ms official
+
+border-radius()
+  for v in vendors
+    if v == official
+      border-radius: arguments
+    else
+      -{v}-border-radius: arguments
+
 body
   background #333
   padding 0
