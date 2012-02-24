@@ -60,11 +60,9 @@ h2
     text-align left
     margin-left 100px
     width 400px
-    .post
+    .post,.you
       .user
         width 380px
-        background #444
-        color #47ac39
         font-weight bold
         text-align center
         border 1px solid #444
@@ -80,21 +78,24 @@ h2
           font-size 11px
           opacity .5
       .post-post
-        background #333
         padding 10px
         width 380px
         border 1px solid #444
         border-radius 0 0 3px 3px
         border-top 0
         overflow hidden
-        color #47ac39
-    .you
-      .user
-        background #222
-        border-color #222
-        color #ddd
-      .post-post
-        border-color #222
-        color #ddd
+    .post .user
+      background #444
+      color #47ac39
+    .post .post-post
+      background #333
+      color #47ac39
+    .you .user
+      background #222
+      border-color #222
+      color #ddd
+    .you .post-post
+      border-color #222
+      color #ddd
   .controls
     margin-top 0px

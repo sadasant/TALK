@@ -81,10 +81,10 @@ h2 {
   width: 400px;
 }
 #body .content .post .user,
-#footer .content .post .user {
+#footer .content .post .user,
+#body .content .you .user,
+#footer .content .you .user {
   width: 380px;
-  background: #444;
-  color: #47ac39;
   font-weight: bold;
   text-align: center;
   border: 1px solid #444;
@@ -95,7 +95,9 @@ h2 {
   padding: 3px 10px;
 }
 #body .content .post .user .date,
-#footer .content .post .user .date {
+#footer .content .post .user .date,
+#body .content .you .user .date,
+#footer .content .you .user .date {
   float: right;
   margin-top: 3px;
   font-weight: normal;
@@ -103,21 +105,31 @@ h2 {
   opacity: 0.5;
 }
 #body .content .post .post-post,
-#footer .content .post .post-post {
-  background: #333;
+#footer .content .post .post-post,
+#body .content .you .post-post,
+#footer .content .you .post-post {
   padding: 10px;
   width: 380px;
   border: 1px solid #444;
   border-radius: 0 0 3px 3px;
   border-top: 0;
   overflow: hidden;
+}
+#body .content .post .user,
+#footer .content .post .user {
+  background: #444;
+  color: #47ac39;
+}
+#body .content .post .post-post,
+#footer .content .post .post-post {
+  background: #333;
   color: #47ac39;
 }
 #body .content .you .user,
 #footer .content .you .user {
   background: #222;
   border-color: #222;
-  color: #ddd !important;
+  color: #ddd;
 }
 #body .content .you .post-post,
 #footer .content .you .post-post {
