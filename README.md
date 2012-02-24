@@ -2,7 +2,7 @@
 
 **TALK** is a simple web system for creating private chats aimed to be the simpliest way to chat over slow and unstable networks.
 
-*Features*
+### Features
 
 - Create private chats with a custom password and share it with a simple url (talk.nodester.com/chatname)
 
