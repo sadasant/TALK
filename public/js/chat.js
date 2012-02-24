@@ -21,7 +21,7 @@ window.onload = function() {
     last = $('.content .post').last().attr('name')*1 || 0
     var data = {
       post : $('textarea').val()
-    , date : new Date()
+    , date : new Date().toString()
     }
     $.post(URL+"/post", data, function(data) {
       console.log(data)
