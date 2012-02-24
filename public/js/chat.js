@@ -25,11 +25,11 @@ window.onload = function() {
     }
     $.post(URL+"/post", data, function(data) {
       if (data === 'ok') {
-        $('textarea').attr('value','')
         if (I) {
           clearInterval(I)
           I = setInterval(loadPosts, 3000)
         }
+        $('textarea').attr('value','')
         loadPosts()
       } else {
         if (data.error == "removed") window.location = "/"
