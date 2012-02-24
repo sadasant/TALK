@@ -10,7 +10,7 @@
 
 - Post comments using the Markdown Syntax.
 
-- Load comments manually by default (for mobile and unestable connections), with an option to ask for new comments automatically every second (for stable connections).
+- Load comments manually by default (for mobile and unstable connections), with an option to ask for new comments automatically every second (for stable connections).
 
 - No way to store the chats in disks or databases, we don't want that.
 
