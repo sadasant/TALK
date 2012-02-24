@@ -25,12 +25,8 @@ window.onload = function() {
     }
     $.post(URL+"/post", data, function(data) {
       if (data === 'ok') {
-        if (I) {
-          clearInterval(I)
-          I = setInterval(loadPosts, 3000)
-        }
         $('textarea').attr('value','')
-        loadPosts()
+        if (!I) loadPosts()
       } else {
         if (data.error == "removed") window.location = "/"
       }
@@ -61,9 +57,10 @@ window.onload = function() {
     if (I) {
       $('#auto').attr('value','Auto Load')
       clearInterval(I)
+      I = null
     } else {
       loadPosts()
-      I = setInterval(loadPosts, 3000)
+      I = setInterval(loadPosts, 1000)
       $('#auto').attr('value','Stop Auto Load')
     }
   }
