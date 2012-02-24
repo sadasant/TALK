@@ -26,6 +26,7 @@ window.onload = function() {
     $.post(URL+"/post", data, function(data) {
       console.log(data)
       if (data === 'ok') {
+        $('textarea').attr('value','')
         loadPosts()
       } else {
         if (data.error == "removed") window.location = "/"
