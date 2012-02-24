@@ -48,6 +48,9 @@ h2 {
 #body textarea,
 #footer textarea {
   width: 400px;
+  min-width: 400px;
+  max-width: 400px;
+  min-height: 50px;
   text-shadow: none;
 }
 #body input[type="button"],
@@ -162,6 +165,11 @@ h2 {
 #body .content .post .post-post pre:hover,
 #footer .content .post .post-post pre:hover {
   overflow-x: scroll;
+}
+#body .content .post .post-post img,
+#footer .content .post .post-post img {
+  max-width: 100px;
+  max-height: 100px;
 }
 #body .content .you .user,
 #footer .content .you .user {
