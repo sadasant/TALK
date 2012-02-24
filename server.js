@@ -17,8 +17,8 @@ talk.configure(function() {
   talk.use(express.session({ secret : "1337" }))
   talk.use(talk.router)
   talk.use(express.static(__dirname + '/public'))
-  talk.use(express.errorHandler({ dumpExceptions: true, showStack: true }))
-  //talk.use(express.errorHandler())
+  //talk.use(express.errorHandler({ dumpExceptions: true, showStack: true }))
+  talk.use(express.errorHandler())
 })
 
 // Global Variables
@@ -52,7 +52,6 @@ talk.post('/new', function(req, res) {
   } else
   // This chat exists
   if (CHATS[name]) {
-    // TODO: Send Error
     return res.render('error', { ERROR: ':/ I have a chat with that name...' })
   }
   // Chat Scheme
@@ -113,7 +112,7 @@ talk.get('/:name', function(req, res) {
       return res.render('join', { chat : chat })
     }
   } else {
-    return res.render('error', { ERROR: 'FORBIDDEN' })
+    return res.render('error', { ERROR: 'NOT FOUND' })
   }
 })
 
@@ -164,6 +163,11 @@ talk.get('/:name/remo', function(req, res) {
   } else {
     return res.render('error', { ERROR: 'FORBIDDEN' })
   }
+})
+
+// ???
+talk.get('//*', function(req, res) {
+  return res.redirect('/')
 })
 
 talk.listen(14774);
