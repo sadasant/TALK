@@ -17,7 +17,10 @@ window.onload = function() {
     $('#auto').click(toggleInterval)
     $('#remo').click(removeChat)
     $('#new_post').on('keypress', function(e){
-      if (e.keyCode=== 10){
+      e = window.event || e
+      var key = e.keyCode
+        , ctrl = e.ctrlKey
+      if (key == 10 || (ctrl && key == 13)) {
         sendPost();
       }
     });
