@@ -1,5 +1,14 @@
 h1
   a(href="/") TALK
+.description
+  p
+    b="TALK "
+    =" is a simple "
+    a(href="https://github.com/sadasant/TALK")="FOSS"
+    |  web system for creating private chats.
+    br
+    br
+    | Create a room with the form below and share it with your friends.
 h2 CREATE
 form#create(action="/new", method="post")
   b User Name
@@ -7,9 +16,9 @@ form#create(action="/new", method="post")
   input(type="textbox", name="user_name")
   br
   br
-  b Chat Name
+  b talk.nodester.com/
   br
-  input(type="textbox", name="name")
+  input(type="textbox", name="name", placeholder="chat_name")
   br
   br
   b Password

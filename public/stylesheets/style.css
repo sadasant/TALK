@@ -42,7 +42,7 @@ h2 {
   -o-border-radius: 8px;
   -ms-border-radius: 8px;
   border-radius: 8px;
-  color: #ddd;
+  color: #999;
   margin: 1px;
 }
 #body textarea,
@@ -83,6 +83,12 @@ h2 {
   background: #444744;
   border: 1px solid #555;
   border-top: 1px solid #666;
+}
+#body .description p,
+#footer .description p {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 #body .content,
 #footer .content {
