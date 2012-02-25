@@ -16,7 +16,6 @@ function reset(req, res, next) {
     TODAY = (new Date()).getDay()
     CHATS = {}
     COUNT = { chats: 0, users: 0 }
-    FORBIDDEN = ['new','join']
   }
   return next()
 }
