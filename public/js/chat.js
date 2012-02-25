@@ -70,6 +70,10 @@ window.onload = function() {
       }
       busy = false
       if (I) setTimeout(loadPosts, 1000)
+    }).error(function() {
+      // Resend on timeout
+      busy = false
+      if (I) loadPosts()
     })
   }
 
