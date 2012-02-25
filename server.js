@@ -163,11 +163,20 @@ talk.post('/:name/load', function(req, res) {
   var chat = CHATS[req.params.name]
     , user = req.session.user
     , last = req.body.last
+    , I    = req.body.I == "true"
   if (chat && user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {
-    if (last == 0 && chat.posts.length > 5) {
-      last += chat.posts.length - 5
+    slicePosts()
+    function slicePosts() {
+      if (last == 0 && chat.posts.length > 5) {
+        last += chat.posts.length - 5
+      }
+      var posts = chat.posts.slice(last)
+      if (posts.length || !I) {
+        return res.send(posts)
+      } else {
+        setTimeout(slicePosts, 1000)
+      }
     }
-    return res.send(chat.posts.slice(last))
   } else {
     return res.render('error', { ERROR: 'FORBIDDEN' })
   }

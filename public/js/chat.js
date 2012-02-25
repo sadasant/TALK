@@ -6,7 +6,7 @@ window.onload = function() {
 
   var last = 0
     , URL = window.location.href
-    , I
+    , I   = false
     , busy = false
 
   bindControls()
@@ -53,6 +53,7 @@ window.onload = function() {
     last = last == undefined ? -1 : last*1
     var data = {
         last : last+1
+      , I    : I
       }
     if (!I) $('#error').html('loading...')
     $.post(URL+"/load", data, function(data) {
@@ -68,17 +69,17 @@ window.onload = function() {
         window.location = "/"
       }
       busy = false
+      if (I) setTimeout(loadPosts, 1000)
     })
   }
 
   function toggleInterval() {
     if (I) {
+      I = false
       $('#auto').val('Auto Load')
-      clearInterval(I)
-      I = null
     } else {
+      I = true
       loadPosts()
-      I = setInterval(loadPosts, 1000)
       $('#auto').val('Stop Auto Load')
     }
   }
