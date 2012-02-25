@@ -16,9 +16,9 @@ window.onload = function() {
     $('#load').click(loadPosts)
     $('#auto').click(toggleInterval)
     $('#remo').click(removeChat)
-    document.getElementById('new_post').addEventListener('keypress', function(e){
+    $('#new_post').on('keypress', function(e){
       if (e.keyCode=== 10){
-        sendPost();
+        console.log('send');
       }
     });
     loadPosts()
