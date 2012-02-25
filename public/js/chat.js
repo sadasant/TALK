@@ -8,7 +8,7 @@ window.onload = function() {
     , URL = window.location.href
     , I
     , busy = false
-
+  
   bindControls()
 
   function bindControls() {
@@ -16,6 +16,11 @@ window.onload = function() {
     $('#load').click(loadPosts)
     $('#auto').click(toggleInterval)
     $('#remo').click(removeChat)
+    $('#new_post').on('keypress', function(e){
+      if (e.keyCode=== 10){
+        sendPost();
+      }
+    });
     loadPosts()
   }
 
