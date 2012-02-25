@@ -63,6 +63,10 @@ talk.post('/new', function(req, res) {
   if (CHATS[name]) {
     return res.render('error', { ERROR: ':/ I have a chat with that name...' })
   }
+  // Invalid characters
+  if (~name.indexOf('/')) {
+    return res.render('error', { ERROR: 'Invalid characters in the chat name!!!' })
+  }
   // Chat Scheme
   var chat = {
     id : COUNT.chats++
@@ -107,7 +111,6 @@ talk.get('/:name', function(req, res) {
     , user = req.session.user
   if (chat) {
     if (user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {
-      console.log(chat.posts)
       return res.render('chat', { title : 'talk '+chat.name, chat : chat, user : user })
     } else {
       if (!user) {
