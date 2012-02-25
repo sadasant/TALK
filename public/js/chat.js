@@ -18,7 +18,7 @@ window.onload = function() {
     $('#remo').click(removeChat)
     $('#new_post').on('keypress', function(e){
       if (e.keyCode=== 10){
-        console.log('send');
+        sendPost();
       }
     });
     loadPosts()
