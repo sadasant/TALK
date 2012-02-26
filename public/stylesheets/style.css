@@ -6,6 +6,9 @@ body {
 a {
   color: #47ac39;
 }
+a:hover {
+  color: #326326;
+}
 h1 {
   color: #47ac39;
   font-size: 55px;
