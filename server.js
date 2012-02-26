@@ -160,15 +160,17 @@ talk.post('/:name/post', reset, function(req, res) {
 
 // Load Posts
 talk.post('/:name/load', function(req, res) {
-  var chat = CHATS[req.params.name]
+  var name = req.params.name
     , user = req.session.user
     , last = req.body.last
     , I    = req.body.I == "true"
+    , chat = CHATS[name]
   if (chat && user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {
     slicePosts()
     function slicePosts() {
       // If the chat was removed while waiting...
-      if (I && !CHATS[req.params.name]) {
+      var chat = CHATS[name]
+      if (I && !chat) {
         return res.render('error', { ERROR: 'FORBIDDEN' })
       }
       if (last == 0 && chat.posts.length > 5) {
