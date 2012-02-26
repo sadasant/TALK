@@ -142,7 +142,7 @@ talk.post('/:name/post', reset, function(req, res) {
     }
     // Post Schema
     var post = {
-      date : new Date(date)
+      date : date
     , post : Markdown(new_post.replace(/</g,'&#60;')).replace(/&amp;#60;/g,'&#60;')
     , user : user
     , pos  : chat.posts.length
@@ -167,6 +167,10 @@ talk.post('/:name/load', function(req, res) {
   if (chat && user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {
     slicePosts()
     function slicePosts() {
+      // If the chat was removed while waiting...
+      if (I && !CHATS[req.params.name]) {
+        return res.render('error', { ERROR: 'FORBIDDEN' })
+      }
       if (last == 0 && chat.posts.length > 5) {
         last += chat.posts.length - 5
       }

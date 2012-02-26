@@ -77,32 +77,32 @@ h2
     text-align left
     margin-left 100px
     width 400px
+    border 1px solid #222
+    border-radius 5px
+    .post:first-child .user
+      border-radius 5px 5px 0 0
+      border-top 0px
+    .post:last-child .post-post
+      border-radius 0 0 5px 5px
     .post
       .user
         width 380px
-        background #444
-        color #47ac39
+        background #383838
+        color #326326
         font-weight bold
         text-align center
-        border 1px solid #444
-        border-radius 5px 5px 0 0
-        margin-top 11px
         overflow hidden
         text-align left
-        padding 3px 10px
+        padding 1px 10px
+        border-top 1px solid #222
+        font-size 10px
         .date
           float right
-          margin-top 3px
-          font-weight normal
-          font-size 11px
-          opacity .5
+          margin-top 1px
       .post-post
         background #333
-        padding 10px
+        padding 6px 10px 12px 10px
         width 380px
-        border 1px solid #444
-        border-radius 0 0 5px 5px
-        border-top 0
         overflow hidden
         color #47ac39
         p
@@ -132,11 +132,9 @@ h2
           max-height 100px
     .you
       .user
-        background #222
-        border-color #222
-        color #ddd
+        background #2d2d2d
+        color #666
       .post-post
-        border-color #222
         color #ddd
   .controls
     margin-top 0px
