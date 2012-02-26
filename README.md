@@ -2,6 +2,10 @@
 
 **TALK** is a simple web system for creating private chats aimed to be the simpliest way to chat over slow and unstable network connections.
 
+**TALK** is written in Node.js using Express, Jade, Stylus and Node-markdown.
+
+*Test it live here: <http://talk.nodester.com/>*
+
 ### Features
 
 - Create private chats with a custom password and share it with a simple url (talk.nodester.com/chatname)
@@ -14,9 +18,7 @@
 
 - No way to store the chats in disks or databases, we don't want that.
 
-**TALK** is written in Node.js using Express, Jade, Stylus and Node-markdown.
-
-Test it live here: <http://talk.nodester.com/>
+  
 
 *Author: [Daniel R.](http://sadasant.com/)*
 
