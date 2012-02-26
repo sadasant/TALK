@@ -18,6 +18,14 @@
 
 - No way to store the chats in disks or databases, we don't want that.
 
+### How to install
+
+- Download and uncompress the [source code](https://github.com/sadasant/TALK/zipball/master).
+
+- I assume you have Node.js and NPM, so enter the folder and run `npm install` to automatically install all the dependencies.
+
+- Run **TALK** with `node server.js` and it will be ready to use on <http://localhost:14774/>
+
   
 
 *Author: [Daniel R.](http://sadasant.com/)*
