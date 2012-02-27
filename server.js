@@ -61,11 +61,11 @@ talk.post('/new', function(req, res) {
   } else
   // This chat exists
   if (CHATS[name]) {
-    return res.render('error', { ERROR: ':/ I have a chat with that name...' })
+    return res.render('error', { ERROR: 'I have a chat with that name' })
   }
   // Invalid characters
   if (~name.indexOf('/')) {
-    return res.render('error', { ERROR: 'Invalid characters in the chat name!!!' })
+    return res.render('error', { ERROR: 'Invalid characters in the chat name' })
   }
   // Chat Scheme
   var chat = {
