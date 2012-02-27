@@ -1,12 +1,15 @@
 h1
-  a(href="/") TALK:
-  =" "+chat.name
+  a(href="/") TALK
+  =": "
+  a(href="/"+chat.name)= chat.name
 #content
   .post.you
     .user
       small Nothing here yet
 p#error
 #controls
+  small Send with CTRL + ENTER
+  br
   textarea#new_post
   br
   br
@@ -21,8 +24,11 @@ p#error
 
 script
   var USER = {
-    id : "#{user.id}"
-  , name : "#{user.name}"
-  }
+      id : "#{user.id}"
+    , name : "#{user.name}"
+    }
+    , CHAT = {
+      name : "#{chat.name}"
+    }
 script(src="/js/jquery-1.7.1.min.js")
 script(src="/js/chat.js")

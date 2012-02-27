@@ -8,6 +8,7 @@ window.onload = function() {
     , URL = window.location.href
     , I   = false
     , busy = false
+    , sent = 0
     , $content = $('#content')
     , $textarea = $('textarea')
     , $error = $('#error')
@@ -40,6 +41,7 @@ window.onload = function() {
     $error.html('loading...')
     $.post(URL+"/post", data, function(data) {
       if (data === 'ok') {
+        sent++
         $textarea.val('')
         if (!I) loadPosts()
       } else {
@@ -64,6 +66,9 @@ window.onload = function() {
       if (data && (data[0] === undefined || data[0].user)) {
         var i = 0
         if (data.length && last == -1) $content.html('')
+        var new_posts = data.length - sent
+        document.title = (new_posts ? "("+new_posts+") " : "") + "TALK: " + CHAT.name
+        sent = 0
         for (; i < data.length; i++) {
           var post = data[i]
           $content.append('<div class="post '+(USER.id == post.user.id ? 'you' : '')+'" name="'+post.pos+'"><div class="user" data-id="'+post.user.id+'" data-name="'+post.user.name+'">'+post.user.name+' <small class="date">'+post.date.split(' ')[4]+'</small></div><div class="post-post" data-date="'+post.date+'">'+post.post+'</div></div>')

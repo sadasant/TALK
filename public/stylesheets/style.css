@@ -201,6 +201,11 @@ h2 {
 #footer #controls {
   margin-top: 0px;
 }
+#body #controls small,
+#footer #controls small {
+  color: #666;
+  font-size: 10px;
+}
 #body #error,
 #footer #error {
   background: #2d2d2d;

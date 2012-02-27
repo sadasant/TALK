@@ -111,7 +111,7 @@ talk.get('/:name', function(req, res) {
     , user = req.session.user
   if (chat) {
     if (user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {
-      return res.render('chat', { title : 'talk '+chat.name, chat : chat, user : user })
+      return res.render('chat', { title : 'TALK', chat : chat, user : user })
     } else {
       if (!user) {
         var date = new Date()
