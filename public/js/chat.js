@@ -96,7 +96,7 @@ window.onload = function() {
         $error.html('')
       } else
       // Bad response
-      if (data.error && data.error == 'removed') {
+      if (data.error) {
         window.location = "/"
       }
       busy = false
