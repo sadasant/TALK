@@ -8,7 +8,7 @@ var express = require('express')
   , TODAY = (new Date()).getDay()
   , CHATS = {}
   , COUNT = { chats: 0, users: 0 }
-  , FORBIDDEN = ['new','join']
+  , FORBIDDEN = ['new', 'join']
 
 // Reset Main Variables
 function reset(req, res, next) {
@@ -150,11 +150,11 @@ talk.post('/:name/post', reset, function(req, res) {
     // Pushing new post
     chat.posts.push(post)
     // removing too old posts
-    var removable = chat.posts.length - 6
+    var removable = chat.posts.length - 5
     if (removable > 0) delete chat.posts[removable-1]
     res.send('ok')
   } else {
-    return res.render('error', { ERROR: 'FORBIDDEN' })
+    return res.send({ error : 'not found' })
   }
 })
 
@@ -171,7 +171,7 @@ talk.post('/:name/load', function(req, res) {
       // If the chat was removed while waiting...
       var chat = CHATS[name]
       if (I && !chat) {
-        return res.render('error', { ERROR: 'FORBIDDEN' })
+        return res.send({ error : 'removed' })
       }
       if (last == 0 && chat.posts.length > 5) {
         last += chat.posts.length - 5
@@ -184,12 +184,12 @@ talk.post('/:name/load', function(req, res) {
       }
     }
   } else {
-    return res.render('error', { ERROR: 'FORBIDDEN' })
+    return res.send({ error : 'FORBIDDEN' })
   }
 })
 
 // Remove Chat
-talk.get('/:name/remo', function(req, res) {
+talk.get('/:name/rm', function(req, res) {
   var chat = CHATS[req.params.name]
     , user = req.session.user
   if (chat && user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {

@@ -6,28 +6,31 @@ window.onload = function() {
 
   var last = 0
     , URL = window.location.href
-    , I   = false
+    , I = false
     , busy = false
-    , sent = 0
+    , sent = 0 // Number of posts sent before loading
     , USER = window.USER
     , CHAT = window.CHAT
     , $content = $('#content')
     , $textarea = $('textarea')
     , $error = $('#error')
     , $auto = $('#auto')
+    , $loadPost
+
 
   bindControls()
 
+  // Binding all the buttons and inputs
   function bindControls() {
     $('#send').click(sendPost)
     $('#load').click(loadPosts)
     $('#auto').click(toggleInterval)
     $('#remo').click(removeChat)
-    // Binding <CTRL> + <ENTER>
-    $('#new_post')
-    .focus(function() {
+    // Resetting the title
+    $('#new_post').focus(function() {
       document.title = "TALK: " + CHAT.name
     })
+    // Binding CTRL + ENTER
     .on('keypress', function(e) {
       e = window.event || e
       var key = e.keyCode
@@ -39,6 +42,7 @@ window.onload = function() {
     loadPosts()
   }
 
+  // Send post
   function sendPost() {
     var data = {
       post : $textarea.val()
@@ -58,56 +62,70 @@ window.onload = function() {
     })
   }
 
+  // Load posts
   function loadPosts() {
     if (busy) return
     busy = true
-    last = $content.find('.post').last().attr('name')
-    last = last == undefined ? -1 : last*1
     var data = {
-        last : last+1
+        last : last
       , I    : I
       }
     if (!I) $error.html('loading...')
-    $.post(URL+"/load", data, function(data) {
-      if (data && (data[0] === undefined || data[0].user)) {
+    $loadPost = $.post(URL+"/load", data, function(data) {
+      if (!data) return
+      // Good response
+      if (Array.isArray(data)) {
+        // Cleaning the content
+        if (data.length && !last) $content.html('')
+        // Rendering the posts
         var i = 0
-        if (data.length && last == -1) $content.html('')
-        var new_posts = data.length - sent
-        document.title = (new_posts ? "("+new_posts+") " : "") + "TALK: " + CHAT.name
+          , new_posts = 0 - sent
+          , post
         sent = 0
         for (; i < data.length; i++) {
-          var post = data[i]
-          $content.append('<div class="post '+(USER.id == post.user.id ? 'you' : '')+'" name="'+post.pos+'"><div class="user" data-id="'+post.user.id+'" data-name="'+post.user.name+'">'+post.user.name+' <small class="date">'+post.date.split(' ')[4]+'</small></div><div class="post-post" data-date="'+post.date+'">'+post.post+'</div></div>')
+          if (post = data[i]) {
+            new_posts++
+            $content.append('<div class="post '+(USER.id == post.user.id ? 'you' : '')+'" name="'+post.pos+'"><div class="user" data-id="'+post.user.id+'" data-name="'+post.user.name+'">'+post.user.name+' <small class="date">'+post.date.split(' ')[4]+'</small></div><div class="post-post" data-date="'+post.date+'">'+post.post+'</div></div>')
+          }
         }
-        last += i+1
+        // Updating the Title
+        document.title = (new_posts ? "("+new_posts+") " : "") + "TALK: " + CHAT.name
+        // We're on the last post
+        if (post) last = post.pos+1
+        // No errors
         $error.html('')
-      } else {
+      } else
+      // Bad response
+      if (data.error && data.error == 'removed') {
         window.location = "/"
       }
       busy = false
+      // Resend
       if (I) setTimeout(loadPosts, 1000)
     }).error(function() {
-      // Resend on timeout
       busy = false
+      // Resend on timeout
       if (I) loadPosts()
     })
   }
 
+  // Toggles long-polling's interval
   function toggleInterval() {
     if (I) {
       I = false
+      $loadPost.abort()
       $auto.val('Auto Load')
     } else {
       I = true
-      loadPosts()
       $auto.val('Stop Auto Load')
+      loadPosts()
     }
   }
 
+  // Removes the chat
   function removeChat() {
-    $.get(URL+"/remo", function(data) {
+    $.get(URL+"/rm", function(data) {
       if (data == "ok") window.location = "/"
     })
   }
-
 }
