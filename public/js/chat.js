@@ -9,6 +9,8 @@ window.onload = function() {
     , I   = false
     , busy = false
     , sent = 0
+    , USER = window.USER
+    , CHAT = window.CHAT
     , $content = $('#content')
     , $textarea = $('textarea')
     , $error = $('#error')
@@ -22,7 +24,11 @@ window.onload = function() {
     $('#auto').click(toggleInterval)
     $('#remo').click(removeChat)
     // Binding <CTRL> + <ENTER>
-    $('#new_post').on('keypress', function(e) {
+    $('#new_post')
+    .focus(function() {
+      document.title = "TALK: " + CHAT.name
+    })
+    .on('keypress', function(e) {
       e = window.event || e
       var key = e.keyCode
         , ctrl = e.ctrlKey
