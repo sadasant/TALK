@@ -74,7 +74,7 @@ window.onload = function() {
     $loadPost = $.post(URL+"/load", data, function(data) {
       if (!data) return
       // Good response
-      if (Array.isArray(data)) {
+      if (data.length >= 0) {
         // Cleaning the content
         if (data.length && !last) $content.html('')
         // Rendering the posts
