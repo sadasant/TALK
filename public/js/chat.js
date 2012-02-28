@@ -8,7 +8,8 @@ window.onload = function() {
     , URL = window.location.href
     , I = false
     , busy = false
-    , sent = 0 // Number of posts sent before loading
+    , sent = 0     // Number of posts sent before loading
+    , received = 0 // Number of received posts before clicking the textarea
     , USER = window.USER
     , CHAT = window.CHAT
     , $content = $('#content')
@@ -29,6 +30,7 @@ window.onload = function() {
     // Resetting the title
     $('#new_post').focus(function() {
       document.title = "TALK: " + CHAT.name
+      received = 0
     })
     // Binding CTRL + ENTER
     .on('keypress', function(e) {
@@ -79,17 +81,17 @@ window.onload = function() {
         if (data.length && !last) $content.html('')
         // Rendering the posts
         var i = 0
-          , new_posts = 0 - sent
           , post
-        sent = 0
         for (; i < data.length; i++) {
           if (post = data[i]) {
-            new_posts++
+            received++
             $content.append('<div class="post '+(USER.id == post.user.id ? 'you' : '')+'" name="'+post.pos+'"><div class="user" data-id="'+post.user.id+'" data-name="'+post.user.name+'">'+post.user.name+' <small class="date">'+post.date.split(' ')[4]+'</small></div><div class="post-post" data-date="'+post.date+'">'+post.post+'</div></div>')
           }
         }
         // Updating the Title
-        document.title = (new_posts ? "("+new_posts+") " : "") + "TALK: " + CHAT.name
+        received -= sent
+        sent = 0
+        document.title = (received ? "("+received+") " : "") + "TALK: " + CHAT.name
         // We're on the last post
         if (post) last = post.pos+1
         // No errors

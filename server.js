@@ -37,23 +37,24 @@ talk.configure(function() {
 
 // Index
 talk.get('/', reset, function(req, res) {
-  if (!req.session.user) {
+  var user = req.session.user
+  if (!user) {
     var date = new Date()
-    req.session.user = {
+    user = req.session.user = {
       chats : []
     , id : COUNT.users
-    , name : "User_"+COUNT.users++
+    , name : "User "+COUNT.users++
     , date : date
     }
   }
-  res.render('index')
+  res.render('index', { user : user })
 })
 
 // New Chat
 talk.post('/new', function(req, res) {
   var name = req.body.name
     , pass = req.body.password
-    , user_name = req.body.user_name
+    , user_name = req.body.user_name.replace(/</g,'&#60;') // Amateur XSS fix
     , user = req.session.user
   // Must be in
   if (!user || ~FORBIDDEN.indexOf(name)) {
@@ -72,8 +73,8 @@ talk.post('/new', function(req, res) {
     id : COUNT.chats++
   , name : name
   , pass : pass
-  , users : [user.id]
   , posts : []
+  , n_of_users : 1
   , date : new Date()
   }
   CHATS[name] = chat
@@ -86,7 +87,7 @@ talk.post('/new', function(req, res) {
 talk.post('/join', reset, function(req, res) {
   var name = req.body.name
     , pass = req.body.password
-    , user_name = req.body.user_name
+    , user_name = req.body.user_name.replace(/</g,'&#60;') // Amateur XSS fix
     , user = req.session.user
     , chat = CHATS[name]
   if (!(user && chat)) {
@@ -97,8 +98,8 @@ talk.post('/join', reset, function(req, res) {
   } else
   if (chat.pass === pass) {
     user.chats.push(chat.id)
+    chat.n_of_users++
     if (user_name) user.name = user_name
-    chat.users.push(user.id)
     res.redirect("/"+name)
   } else {
     return res.render('error', { ERROR: 'FORBIDDEN' })
@@ -110,19 +111,19 @@ talk.get('/:name', function(req, res) {
   var chat = CHATS[req.params.name]
     , user = req.session.user
   if (chat) {
-    if (user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {
+    if (user && ~user.chats.indexOf(chat.id)) {
       return res.render('chat', { title : 'TALK', chat : chat, user : user })
     } else {
       if (!user) {
         var date = new Date()
-        req.session.user = {
+        user = req.session.user = {
           chats : []
         , id : COUNT.users
-        , name : "User_"+COUNT.users++
+        , name : "User "+COUNT.users++
         , date : date
         }
       }
-      return res.render('join', { chat : chat })
+      return res.render('join', { chat : chat, user : user })
     }
   } else {
     return res.render('error', { ERROR: 'NOT FOUND' })
@@ -135,22 +136,22 @@ talk.post('/:name/post', reset, function(req, res) {
     , user = req.session.user
     , new_post = req.body.post
     , date = req.body.date
-  if (chat && user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id) && new_post) {
+  if (chat && user && ~user.chats.indexOf(chat.id) && new_post) {
     // Limit posts lenght
-    if (new_post.length > 512) {
+    if (new_post.length > 1024) {
       return res.send({ error: 'too long'})
     }
     // Post Schema
     var post = {
       date : date
-    , post : Markdown(new_post.replace(/</g,'&#60;')).replace(/&amp;#60;/g,'&#60;')
+    , post : Markdown(new_post.replace(/</g,'&#60;')).replace(/&amp;#60;/g,'&#60;') // Amateur XSS fix
     , user : user
     , pos  : chat.posts.length
     }
     // Pushing new post
     chat.posts.push(post)
     // removing too old posts
-    var removable = chat.posts.length - 5
+    var removable = chat.posts.length - (3*chat.n_of_users) // According to the ammount of users
     if (removable > 0) delete chat.posts[removable-1]
     res.send('ok')
   } else {
@@ -165,7 +166,7 @@ talk.post('/:name/load', function(req, res) {
     , last = req.body.last
     , I    = req.body.I == "true"
     , chat = CHATS[name]
-  if (chat && user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {
+  if (chat && user && ~user.chats.indexOf(chat.id)) {
     slicePosts()
     function slicePosts() {
       // If the chat was removed while waiting...
@@ -173,10 +174,13 @@ talk.post('/:name/load', function(req, res) {
       if (I && !chat) {
         return res.send({ error : 'removed' })
       }
-      if (last == 0 && chat.posts.length > 5) {
-        last += chat.posts.length - 5
+      // Send only the last posts
+      var last_limit = 3 * chat.n_of_users
+      if (last == 0 && chat.posts.length > last_limit) {
+        last += chat.posts.length - last_limit
       }
       var posts = chat.posts.slice(last)
+      // Send posts or continue the queue
       if (posts.length || !I) {
         return res.send(posts)
       } else {
@@ -192,7 +196,7 @@ talk.post('/:name/load', function(req, res) {
 talk.get('/:name/rm', function(req, res) {
   var chat = CHATS[req.params.name]
     , user = req.session.user
-  if (chat && user && ~chat.users.indexOf(user.id) && ~user.chats.indexOf(chat.id)) {
+  if (chat && user && ~user.chats.indexOf(chat.id)) {
     delete CHATS[req.params.name]
     delete user.chats[user.chats.indexOf(chat.id)]
     user.chats.filter(function(e) { return e })
