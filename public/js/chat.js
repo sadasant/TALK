@@ -85,7 +85,7 @@ window.onload = function() {
         for (; i < data.length; i++) {
           if (post = data[i]) {
             received++
-            $content.append('<div class="post '+(USER.id == post.user.id ? 'you' : '')+'" name="'+post.pos+'"><div class="user" data-id="'+post.user.id+'" data-name="'+post.user.name+'">'+post.user.name+' <small class="date">'+post.date.split(' ')[4]+'</small></div><div class="post-post" data-date="'+post.date+'">'+post.post+'</div></div>')
+            $content.prepend('<div class="post '+(USER.id == post.user.id ? 'you' : '')+'" name="'+post.pos+'"><div class="user" data-id="'+post.user.id+'" data-name="'+post.user.name+'">'+post.user.name+' <small class="date">'+post.date.split(' ')[4]+'</small></div><div class="post-post" data-date="'+post.date+'">'+post.post+'</div></div>')
           }
         }
         // Updating the Title
@@ -103,7 +103,7 @@ window.onload = function() {
       }
       busy = false
       // Resend
-      if (I) setTimeout(loadPosts, 1000)
+      if (I) loadPosts()
     }).error(function() {
       busy = false
       // Resend on timeout
@@ -119,7 +119,7 @@ window.onload = function() {
       $auto.val('Auto Load')
     } else {
       I = true
-      $auto.val('Stop Auto Load')
+      $auto.val('Stop Auto')
       loadPosts()
     }
   }

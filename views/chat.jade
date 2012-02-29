@@ -2,25 +2,18 @@ h1
   a(href="/") TALK
   =": "
   a(href="/"+chat.name)= chat.name
+.controls
+  textarea(placeholder="Send with CTRL + ENTER")#new_post
+  input#send(type="button", value="Send")
+  input#load(type="button", value="Load")
+  input#auto(type="button", value="Auto Load")
+p#error
 #content
   .post.you
     .user
       small Nothing here yet
-p#error
-#controls
-  small Send with CTRL + ENTER
-  br
-  textarea#new_post
-  br
-  br
-  input#send(type="button", value="Send")
-  input#load(type="button", value="Load")
-  br
-  br
-  input#auto(type="button", value="Auto Load")
-  br
-  br
-  input#remo(type="button", value="Remove Chat")
+.controls
+  input#remo(type="button", value="Remove")
 
 script
   var USER = {

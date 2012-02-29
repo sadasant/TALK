@@ -13,6 +13,7 @@ h1 {
   color: #47ac39;
   font-size: 55px;
   text-shadow: 1px 1px 0 #000;
+  margin-bottom: 20px;
 }
 h1 a {
   color: inherit;
@@ -21,6 +22,12 @@ h1 a {
 h2 {
   color: #666;
   text-shadow: 1px 1px 0 #000;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
 }
 #body,
 #footer {
@@ -62,13 +69,12 @@ h2 {
   width: auto;
   border: 1px solid #444;
   border-top: 1px solid #555;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  -o-border-radius: 8px;
-  -ms-border-radius: 8px;
-  border-radius: 8px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
   color: #999;
-  margin: 1px;
 }
 #body input[type="button"]:hover,
 #footer input[type="button"]:hover,
@@ -86,10 +92,10 @@ h2 {
 }
 #body #content,
 #footer #content {
-  margin-top: -15px;
   text-align: left;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 25px;
   width: auto;
   max-width: 400px;
   border: 1px solid #222;
@@ -195,36 +201,72 @@ h2 {
 #footer #content .you .post-post {
   color: #ddd;
 }
-#body #controls,
-#footer #controls {
+#body .controls,
+#footer .controls {
   margin-top: 0px;
-  max-width: 400px;
+  max-width: 404px;
   margin-left: auto;
   margin-right: auto;
 }
-#body #controls small,
-#footer #controls small {
-  color: #666;
-  font-size: 10px;
+#body .controls input,
+#footer .controls input {
+  min-width: auto;
+  width: 33%;
+  margin: 0;
+  margin-top: 3px;
+  margin-bottom: 5px;
 }
-#body #controls textarea,
-#footer #controls textarea {
-  width: auto;
+#body .controls #send,
+#footer .controls #send {
+  -webkit-border-radius: 5px 0 0 5px;
+  -moz-border-radius: 5px 0 0 5px;
+  -o-border-radius: 5px 0 0 5px;
+  -ms-border-radius: 5px 0 0 5px;
+  border-radius: 5px 0 0 5px;
+  border-right: 0;
+}
+#body .controls #load,
+#footer .controls #load {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -o-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
+  border-right: 0;
+}
+#body .controls #auto,
+#footer .controls #auto {
+  -webkit-border-radius: 0 5px 5px 0;
+  -moz-border-radius: 0 5px 5px 0;
+  -o-border-radius: 0 5px 5px 0;
+  -ms-border-radius: 0 5px 5px 0;
+  border-radius: 0 5px 5px 0;
+}
+#body .controls #load:hover,
+#footer .controls #load:hover,
+#body .controls #auto:hover,
+#footer .controls #auto:hover {
+  border-left-color: #444;
+}
+#body .controls textarea,
+#footer .controls textarea {
   width: 98%;
   min-height: 50px;
   text-shadow: none;
 }
 #body #error,
 #footer #error {
-  background: #2d2d2d;
-  color: #444744;
-  font-weight: bold;
-  line-height: 30px;
   width: 100px;
-  margin-left: 250px;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  -o-border-radius: 8px;
-  -ms-border-radius: 8px;
-  border-radius: 8px;
+  margin: 5px auto 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+  padding: 5px;
+  color: #666;
+  font-size: 10px;
+}
+#footer {
+  font-size: 11px;
 }
