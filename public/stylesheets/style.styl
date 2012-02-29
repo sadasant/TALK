@@ -29,27 +29,12 @@ h2
   text-shadow 1px 1px 0 #000
 
 #body,#footer
-  width 600px
   margin-left auto
   margin-right auto
   margin-top -17px
   text-align center
   color #ddd
   letter-spacing 1px
-  input, textarea
-    background #2d2d2d
-    width 200px
-    border 1px solid #444
-    border-top 1px solid #555
-    border-radius 8px
-    color #999
-    margin 1px
-  textarea
-    width 400px
-    min-width 400px
-    max-width 400px
-    min-height 50px
-    text-shadow none
   input[type="button"], input[type="submit"]
     color #222
     font-weight bold
@@ -65,6 +50,14 @@ h2
     font-size 14px
     letter-spacing 2px
     border-radius 5px
+  input, textarea
+    background #2d2d2d
+    width auto
+    border 1px solid #444
+    border-top 1px solid #555
+    border-radius 8px
+    color #999
+    margin 1px
   input[type="button"]:hover, input[type="submit"]:hover
     background #444744
     border 1px solid #555
@@ -77,8 +70,10 @@ h2
   #content
     margin-top -15px
     text-align left
-    margin-left 100px
-    width 400px
+    margin-left auto
+    margin-right auto
+    width auto
+    max-width 400px
     border 1px solid #222
     border-radius 5px
     .post:first-child .user
@@ -87,8 +82,10 @@ h2
     .post:last-child .post-post
       border-radius 0 0 5px 5px
     .post
+      .user,.post-post
+        width auto
+        max-width 380px
       .user
-        width 380px
         background #383838
         color #326326
         font-weight bold
@@ -104,7 +101,6 @@ h2
       .post-post
         background #333
         padding 6px 10px 12px 10px
-        width 380px
         overflow hidden
         color #47ac39
         p
@@ -140,9 +136,17 @@ h2
         color #ddd
   #controls
     margin-top 0px
+    max-width: 400px
+    margin-left auto
+    margin-right auto
     small
       color #666
       font-size 10px
+    textarea
+      width auto
+      width 98%
+      min-height 50px
+      text-shadow none
   #error
     background #2D2D2D
     color #444744

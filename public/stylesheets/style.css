@@ -24,37 +24,12 @@ h2 {
 }
 #body,
 #footer {
-  width: 600px;
   margin-left: auto;
   margin-right: auto;
   margin-top: -17px;
   text-align: center;
   color: #ddd;
   letter-spacing: 1px;
-}
-#body input,
-#footer input,
-#body textarea,
-#footer textarea {
-  background: #2d2d2d;
-  width: 200px;
-  border: 1px solid #444;
-  border-top: 1px solid #555;
-  -webkit-border-radius: 8px;
-  -moz-border-radius: 8px;
-  -o-border-radius: 8px;
-  -ms-border-radius: 8px;
-  border-radius: 8px;
-  color: #999;
-  margin: 1px;
-}
-#body textarea,
-#footer textarea {
-  width: 400px;
-  min-width: 400px;
-  max-width: 400px;
-  min-height: 50px;
-  text-shadow: none;
 }
 #body input[type="button"],
 #footer input[type="button"],
@@ -79,6 +54,22 @@ h2 {
   -ms-border-radius: 5px;
   border-radius: 5px;
 }
+#body input,
+#footer input,
+#body textarea,
+#footer textarea {
+  background: #2d2d2d;
+  width: auto;
+  border: 1px solid #444;
+  border-top: 1px solid #555;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -o-border-radius: 8px;
+  -ms-border-radius: 8px;
+  border-radius: 8px;
+  color: #999;
+  margin: 1px;
+}
 #body input[type="button"]:hover,
 #footer input[type="button"]:hover,
 #body input[type="submit"]:hover,
@@ -97,8 +88,10 @@ h2 {
 #footer #content {
   margin-top: -15px;
   text-align: left;
-  margin-left: 100px;
-  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+  max-width: 400px;
   border: 1px solid #222;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -124,8 +117,14 @@ h2 {
   border-radius: 0 0 5px 5px;
 }
 #body #content .post .user,
+#footer #content .post .user,
+#body #content .post .post-post,
+#footer #content .post .post-post {
+  width: auto;
+  max-width: 380px;
+}
+#body #content .post .user,
 #footer #content .post .user {
-  width: 380px;
   background: #383838;
   color: #326326;
   font-weight: bold;
@@ -145,7 +144,6 @@ h2 {
 #footer #content .post .post-post {
   background: #333;
   padding: 6px 10px 12px 10px;
-  width: 380px;
   overflow: hidden;
   color: #47ac39;
 }
@@ -200,11 +198,21 @@ h2 {
 #body #controls,
 #footer #controls {
   margin-top: 0px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 }
 #body #controls small,
 #footer #controls small {
   color: #666;
   font-size: 10px;
+}
+#body #controls textarea,
+#footer #controls textarea {
+  width: auto;
+  width: 98%;
+  min-height: 50px;
+  text-shadow: none;
 }
 #body #error,
 #footer #error {
