@@ -22,4 +22,12 @@ Features
 Installation
 ------------
 
-Use `npm install` to automatically install all the dependencies, then run **TALK** with `node server.js` and it will be ready to use on <http://localhost:14774/>
+Install all the dependencies with `npm`
+
+    npm install
+
+Then run **TALK** main server file with `node`
+
+    node server.js
+
+And finally open <http://localhost:14774/> on your browser.
