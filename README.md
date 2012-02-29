@@ -1,12 +1,12 @@
-# TALK
+TALK
+====
 
-**TALK** is a simple web system for creating private chats aimed to be the simpliest way to chat over slow and unstable network connections.
+**TALK** is a simple FOSS node.js app for creating private chats.
 
-**TALK** is written in Node.js using Express, Jade, Stylus and Node-markdown.
+You can test it live here: <http://talk.nodester.com/>.
 
-*Test it live here: <http://talk.nodester.com/>*
-
-### Features
+Features
+--------
 
 - Create private chats with a custom password and share it with a simple url (talk.nodester.com/chatname)
 
@@ -18,16 +18,8 @@
 
 - No way to store the chats in disks or databases, we don't want that.
 
-### How to install
 
-- Download and uncompress the [source code](https://github.com/sadasant/TALK/zipball/master).
+Installation
+------------
 
-- I assume you have Node.js and NPM, so enter the folder and run `npm install` to automatically install all the dependencies.
-
-- Run **TALK** with `node server.js` and it will be ready to use on <http://localhost:14774/>
-
-  
-
-*Author: [Daniel R.](http://sadasant.com/)*
-
-*License: [MIT](http://opensource.org/licenses/mit-license.php)*
+Use `npm install` to automatically install all the dependencies, then run **TALK** with `node server.js` and it will be ready to use on <http://localhost:14774/>
