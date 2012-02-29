@@ -210,10 +210,17 @@ h2 {
 #body .controls input,
 #footer .controls input {
   min-width: auto;
-  width: 33%;
   margin: 0;
   margin-top: 3px;
   margin-bottom: 5px;
+}
+#body .controls #send,
+#footer .controls #send,
+#body .controls #load,
+#footer .controls #load,
+#body .controls #auto,
+#footer .controls #auto {
+  width: 33%;
 }
 #body .controls #send,
 #footer .controls #send {
