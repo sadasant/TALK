@@ -52,7 +52,6 @@ h2 {
   cursor: hand;
   padding: 3px 10px;
   width: auto;
-  line-height: 20px;
   font-size: 14px;
   letter-spacing: 2px;
   -webkit-border-radius: 5px;
@@ -250,7 +249,8 @@ h2 {
 }
 #body .controls textarea,
 #footer .controls textarea {
-  width: 98%;
+  resize: none;
+  width: 99%;
   min-height: 50px;
   text-shadow: none;
 }
