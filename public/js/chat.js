@@ -10,12 +10,14 @@ window.onload = function() {
     , busy = false
     , sent = 0     // Number of posts sent before loading
     , received = 0 // Number of received posts before clicking the textarea
+    , confirm_remove = false
     , USER = window.USER
     , CHAT = window.CHAT
     , $content = $('#content')
     , $textarea = $('textarea')
     , $error = $('#error')
     , $auto = $('#auto')
+    , $remo = $('#remo')
     , $loadPost
 
 
@@ -126,8 +128,13 @@ window.onload = function() {
 
   // Removes the chat
   function removeChat() {
-    $.get(URL+"/rm", function(data) {
-      if (data == "ok") window.location = "/"
-    })
+    if (!confirm_remove) {
+      $remo.val('Are you sure?')
+      confirm_remove = true
+    } else {
+      $.get(URL+"/rm", function(data) {
+        if (data == "ok") window.location = "/"
+      })
+    }
   }
 }

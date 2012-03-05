@@ -188,6 +188,8 @@ h2 {
 }
 #body #content .post .post-post img,
 #footer #content .post .post-post img {
+  min-width: 50px;
+  min-height: 50px;
   max-width: 100px;
   max-height: 100px;
 }
