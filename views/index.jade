@@ -8,9 +8,12 @@ h1
     |  node.js app for creating private chats.
     br
     br
-    | All the chats are flushed once a day and after every
-    a(href="https://github.com/sadasant/TALK/commits/master/") update
-    |.
+    | Countdown to flush:
+    - var date = new Date
+    - var hours = 23 - date.getHours()
+    - var minutes = 59 - date.getMinutes()
+    br
+    b= hours + 'h ' + (minutes < 10 ? '0' + minutes : minutes) + 'm'
 h2 CREATE
 form#create(action="/new", method="post")
   b User Name

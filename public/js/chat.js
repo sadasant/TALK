@@ -7,7 +7,7 @@ window.onload = function() {
   var last = 0
     , URL = window.location.href
     , I = false
-    , busy = false
+    , busy = { post: false, load: false }
     , sent = 0     // Number of posts sent before loading
     , received = 0 // Number of received posts before clicking the textarea
     , confirm_remove = false
@@ -27,7 +27,7 @@ window.onload = function() {
   function bindControls() {
     $('#send').click(sendPost)
     $('#load').click(loadPosts)
-    $('#auto').click(toggleInterval)
+    $('#auto').click(autoLoad)
     $('#remo').click(removeChat)
     // Resetting the title
     $('#new_post').focus(function() {
@@ -48,6 +48,8 @@ window.onload = function() {
 
   // Send post
   function sendPost() {
+    if (busy.post) return
+    busy.post = true
     var data = {
       post : $textarea.val()
     , date : new Date().toString()
@@ -57,19 +59,24 @@ window.onload = function() {
       if (data === 'ok') {
         sent++
         $textarea.val('')
+        // No errors
+        $error.html('')
         if (!I) loadPosts()
       } else {
         if (data.error) {
           $error.html(data.error)
         }
       }
+      busy.post = false
+    }).error(function() {
+      busy.post = false
     })
   }
 
   // Load posts
   function loadPosts() {
-    if (busy) return
-    busy = true
+    if (busy.load) return
+    busy.load = true
     var data = {
         last : last
       , I    : I
@@ -103,18 +110,18 @@ window.onload = function() {
       if (data.error) {
         window.location = "/"
       }
-      busy = false
+      busy.load = false
       // Resend
       if (I) loadPosts()
     }).error(function() {
-      busy = false
+      busy.load = false
       // Resend on timeout
-      if (I) loadPosts()
+      if (I) setTimeout(loadPosts, 1000)
     })
   }
 
   // Toggles long-polling's interval
-  function toggleInterval() {
+  function autoLoad() {
     if (I) {
       I = false
       $loadPost.abort()
