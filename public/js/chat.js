@@ -2,6 +2,9 @@
 // By Daniel R. (sadasant.com)
 // License: http://opensource.org/licenses/mit-license.php
 
+// If Google failed, load our local copy of jQuery
+!window.jQuery && document.write(unescape('%3Cscript src="/js/jquery-1.7.1.min.js"%3E%3C/script%3E'))
+
 window.onload = function() {
 
   var last = 0
