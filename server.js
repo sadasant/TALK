@@ -3,8 +3,6 @@
 // License: http://opensource.org/licenses/mit-license.php
 
 var express = require('express')
-  //, RedisStore = require('connect-redis')(express)
-  //, sessions = new RedisStore()
   , Markdown = require('node-markdown').Markdown
   , talk = module.exports = express.createServer()
   , TODAY = (new Date()).getDay()
@@ -33,7 +31,6 @@ talk.configure(function() {
   talk.use(express.session({ secret : "1337" /*, store: sessions*/ }))
   talk.use(talk.router)
   talk.use(express.static(__dirname + '/public'))
-  //talk.use(express.errorHandler({ dumpExceptions: true, showStack: true }))
   talk.use(express.errorHandler())
 })
 
