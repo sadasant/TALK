@@ -77,7 +77,7 @@ window.onload = function() {
     S.ajax('POST', URL+"/post", U, data, sentPost)
   }
 
-  // Once the ser
+  // Post is sent
   function sentPost(stat, data) {
     if (stat === 200 && data === 'ok') {
       sent++
@@ -108,6 +108,7 @@ window.onload = function() {
     SX = S.ajax('POST', URL+"/load", U, data, gotPosts)
   }
 
+  // Create post, used in gotPosts
   function createPost(post) {
     var html = '<div class="post '+(USER.id == post.user.id ? 'you' : '')+'" name="'+post.pos+'"><div class="user" data-id="'+post.user.id+'" data-name="'+post.user.name+'">'+post.user.name+' <small class="date">'+post.date.split(' ')[4]+'</small></div><div class="post-post" data-date="'+post.date+'">'+post.post+'</div></div>'
       , first = $content.firstChild
@@ -126,10 +127,9 @@ window.onload = function() {
     // Good response
     if (stat === 200) {
       if ((data = JSON.parse(data)).length >= 0) {
-        // Rendering the posts
-        var i = 0
-          , post
-        for (; i < data.length; i++) {
+        var post
+        // Creating the posts
+        for (var i = 0, l = data.length; i < l; i++) {
           if (post = data[i]) {
             received++
             createPost(post)
@@ -147,14 +147,11 @@ window.onload = function() {
         $error.innerHTML = ''
       } else
       // Bad response
-      if (data.error) {
-        W.location = "/"
-      }
+      if (data.error) W.location = "/"
       busy.load = false
       // Resend
       if (loop) getPosts()
-    }
-    // Failed, restart?
+    } // Failed, restart?
     else {
       busy.load = false
       // Resend on timeout
@@ -181,8 +178,8 @@ window.onload = function() {
       $remo.setAttribute('value', 'Are you sure?')
       confirm_remove = true
     } else {
-      S.ajax('GET', URL+"/rm", U, U, function(data) {
-        if (data == "ok") W.location = "/"
+      S.ajax('GET', URL+"/rm", U, U, function(stat, data) {
+        W.location = "/"
       })
     }
   }
