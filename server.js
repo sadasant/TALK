@@ -2,8 +2,11 @@
 // By Daniel R. (sadasant.com)
 // License: http://opensource.org/licenses/mit-license.php
 
+  // Libraries
 var express = require('express')
   , Markdown = require('node-markdown').Markdown
+
+  // Variables
   , talk = module.exports = express.createServer()
   , TODAY = (new Date()).getDay()
   , CHATS = {}
@@ -163,14 +166,14 @@ talk.post('/:name/load', function(req, res) {
   var name = req.params.name
     , user = req.session.user
     , last = req.body.last
-    , I    = req.body.I == "true"
+    , loop = req.body.loop == "true"
     , chat = CHATS[name]
   if (chat && user && ~user.chats.indexOf(chat.id)) {
     slicePosts()
     function slicePosts() {
       // If the chat was removed while waiting...
       var chat = CHATS[name]
-      if (I && !chat) {
+      if (loop && !chat) {
         return res.send({ error : 'removed' })
       }
       // Send only the last posts
@@ -180,7 +183,7 @@ talk.post('/:name/load', function(req, res) {
       }
       var posts = chat.posts.slice(last)
       // Send posts or continue the queue
-      if (posts.length || !I) {
+      if (posts.length || !loop) {
         return res.send(posts)
       } else {
         setTimeout(slicePosts, 1000)
@@ -211,3 +214,4 @@ talk.error(function(req, res) {
 })
 
 talk.listen(14774);
+console.log("Running at http://localhost:14774/")

@@ -9,7 +9,7 @@ window.onload = function() {
 
   var last = 0
     , URL = window.location.href
-    , I = false
+    , loop = false
     , busy = { post: false, load: false }
     , sent = 0     // Number of posts sent before loading
     , received = 0 // Number of received posts before clicking the textarea
@@ -64,7 +64,7 @@ window.onload = function() {
         $textarea.val('')
         // No errors
         $error.html('')
-        if (!I) loadPosts()
+        if (!loop) loadPosts()
       } else {
         if (data.error) {
           $error.html(data.error)
@@ -82,9 +82,9 @@ window.onload = function() {
     busy.load = true
     var data = {
         last : last
-      , I    : I
+      , loop : loop
       }
-    if (!I) $error.html('loading...')
+    if (!loop) $error.html('loading...')
     $loadPost = $.post(URL+"/load", data, function(data) {
       if (!data) return
       // Good response
@@ -115,22 +115,22 @@ window.onload = function() {
       }
       busy.load = false
       // Resend
-      if (I) loadPosts()
+      if (loop) loadPosts()
     }).error(function() {
       busy.load = false
       // Resend on timeout
-      if (I) setTimeout(loadPosts, 1000)
+      if (loop) setTimeout(loadPosts, 1000)
     })
   }
 
   // Toggles long-polling's interval
   function autoLoad() {
-    if (I) {
-      I = false
+    if (loop) {
+      loop = false
       $loadPost.abort()
       $auto.val('Auto Load')
     } else {
-      I = true
+      loop = true
       $auto.val('Stop Auto')
       loadPosts()
     }
