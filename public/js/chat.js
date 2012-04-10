@@ -86,9 +86,11 @@ window.onload = function() {
       $error.innerHTML = ''
       if (!loop) getPosts()
     } else {
-      var error = JSON.parse(data)
+      var error
+      try { error = JSON.parse(data) }
+      catch(e) {}
       if (error) {
-        $error.html(error)
+        $error.innerHTML = error
       }
     }
     busy.post = false
