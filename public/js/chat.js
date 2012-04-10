@@ -81,7 +81,7 @@ window.onload = function() {
   function sentPost(stat, data) {
     if (stat === 200 && data === 'ok') {
       sent++
-      $textarea.setAttribute('value', '')
+      $textarea.value = ''
       // No errors
       $error.innerHTML = ''
       if (!loop) getPosts()
