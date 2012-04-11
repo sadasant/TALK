@@ -169,6 +169,7 @@ window.onload = function() {
       busy.load = false
       busy.post = false
       SX.abort()
+      SX = U
       $auto.setAttribute('value', 'Auto Load')
     } else {
       loop = true
