@@ -24,9 +24,9 @@ window.onload = function() {
     , confirm_remove = false
 
   // Areas
-    , $content = S.q('#content')[0]
+    , $content  = S.q('#content')[0]
     , $textarea = S.q('textarea')[0]
-    , $error = S.q('#error')[0]
+    , $error    = S.q('#error')[0]
 
   // Buttons
     , $send = S.q('#send')[0]
@@ -52,7 +52,7 @@ window.onload = function() {
   // Send with CTRL + ENTER
   function ctrl_enter (e) {
     e = window.event || e
-    var key = e.keyCode
+    var key  = e.keyCode
       , ctrl = e.ctrlKey
     if (key == 10 || (ctrl && key == 13)) {
       sendPost()
@@ -61,7 +61,7 @@ window.onload = function() {
 
   // Resetting the title
   function resetTitle() {
-    D.title = "TALK: " + CHAT.name
+    D.title  = "TALK: " + CHAT.name
     received = 0
   }
 
@@ -70,24 +70,24 @@ window.onload = function() {
     if (busy.post) return
     busy.post = true
     var data = {
-      post : $textarea.value
-    , date : new Date().toString()
-    }
+        post : $textarea.value
+      , date : new Date().toString()
+      }
     $error.innerHTML = 'loading...'
     S.ajax('POST', URL+"/post", U, data, sentPost)
   }
 
   // Post is sent
-  function sentPost(stat, data) {
-    if (stat === 200 && data === 'ok') {
+  function sentPost(ok, data) {
+    if (!data) return
+    if (ok && data === 'ok') {
       sent++
-      $textarea.value = ''
-      // No errors
+      $textarea.value  = ''
       $error.innerHTML = ''
       if (!loop) getPosts()
     } else {
       var error
-      try { error = JSON.parse(data) }
+      try { error = JSON.parse(data).error }
       catch(e) {}
       if (error) {
         $error.innerHTML = error
@@ -108,28 +108,15 @@ window.onload = function() {
     SX = S.ajax('POST', URL+"/load", U, data, gotPosts)
   }
 
-  // Create post, used in gotPosts
-  function createPost(post) {
-    var html = '<div class="post '+(USER.id == post.user.id ? 'you' : '')+'" name="'+post.pos+'"><div class="user" data-id="'+post.user.id+'" data-name="'+post.user.name+'">'+post.user.name+' <small class="date">'+post.date.split(' ')[4]+'</small></div><div class="post-post" data-date="'+post.date+'">'+post.post+'</div></div>'
-      , first = $content.firstChild
-    if (first.insertAdjacentHTML) {
-      first.insertAdjacentHTML('beforeBegin', html)
-    } else {
-      var range = document.createRange()
-        , frag = range.createContextualFragment(html)
-      $content.insertBefore(frag, $content.firstChild)
-    }
-  }
-
   // Got posts
-  function gotPosts(stat, data) {
-    if (!data) return
-    // Good response
-    if (stat === 200) {
-      if ((data = JSON.parse(data)).length >= 0) {
-        var post
-        // Creating the posts
-        for (var i = 0, l = data.length; i < l; i++) {
+  function gotPosts(ok, data) {
+    if (!(ok || data)) return
+    // Good response, create the posts
+    if (ok) {
+      try { data = JSON.parse(data) }
+      catch(e) {}
+      if (data.length >= 0) {
+        for (var post, i = 0, l = data.length; i < l; i++) {
           if (post = data[i]) {
             received++
             createPost(post)
@@ -141,25 +128,46 @@ window.onload = function() {
         received -= sent
         sent = 0
         D.title = (received ? "("+received+") " : "") + "TALK: " + CHAT.name
-        // We're on the last post
-        if (post) last = post.pos+1
-        // No errors
+        if (post) last = post.pos + 1 // We're on the last post
         $error.innerHTML = ''
       } else
-      // Bad response
-      if (data.error) W.location = "/"
+      // Wong response, getting out of here
+      if (data.error) {
+        W.location = "/"
+      }
       busy.load = false
-      // Resend
+      // Restart?
       if (loop) getPosts()
-    } // Failed, restart?
-    else {
+    } else {
+      // Restart?
       busy.load = false
-      // Resend on timeout
       if (loop) setTimeout(getPosts, 1000)
     }
   }
 
-  // Toggles long-polling's interval
+  // Create post, used in gotPosts
+  function createPost(post) {
+    var html = ''
+      + '<div class="post '+(USER.id == post.user.id ? 'you' : '')+'" name="'+post.pos+'">'
+      +   '<div class="user" data-id="'+post.user.id+'" data-name="'+post.user.name+'">'
+      +     post.user.name
+      +     '<small class="date">'+post.date.split(' ')[4]+'</small>'
+      +   '</div>'
+      +   '<div class="post-post" data-date="'+post.date+'">'
+      +     post.post
+      +   '</div>'
+      + '</div>'
+      , first = $content.firstChild
+    if (first.insertAdjacentHTML) {
+      first.insertAdjacentHTML('beforeBegin', html)
+    } else {
+      var range = document.createRange()
+        , frag  = range.createContextualFragment(html)
+      $content.insertBefore(frag, first)
+    }
+  }
+
+  // Toggles long-polling
   function autoLoad() {
     if (loop) {
       loop = false
@@ -178,7 +186,7 @@ window.onload = function() {
       $remo.setAttribute('value', 'Are you sure?')
       confirm_remove = true
     } else {
-      S.ajax('GET', URL+"/rm", U, U, function(stat, data) {
+      S.ajax('GET', URL+"/rm", U, U, function() {
         W.location = "/"
       })
     }
