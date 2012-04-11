@@ -1,0 +1,28 @@
+h1
+  a(href="/") TALK
+  =": "
+  a(href="/"+chat.name)= chat.name
+.controls
+  textarea(placeholder="Send with CTRL + ENTER")#new_post
+  input#send(type="button", value="Send")
+  input#load(type="button", value="Load")
+  input#auto(type="button", value="Auto Load")
+p#error
+#content
+  .post.you
+    .user
+      small Nothing here yet
+.controls
+  input#remo(type="button", value="Remove Chat")
+
+script
+  var USER = {
+      id : "#{user.id}"
+    , name : "#{user.name}"
+    }
+    , CHAT = {
+      name : "#{chat.name}"
+    }
+//script(src="http://sadasant.com/js/S.js")
+script(src="/js/S.js")
+script(src="/js/chat.js")

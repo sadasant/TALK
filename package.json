@@ -1,5 +1,23 @@
-{
-  "name":"talk",
-  "node":"0.6.12",
-  "author":"sadasant"
+{ "name" : "TALK"
+, "description" : "Simple private chats on Node.js"
+, "version" : "0.2.29"
+, "homepage" : "talk.nodester.com"
+, "repository" : "git@github.com:sadasant/TALK.git"
+, "author" : "Daniel Rodríguez (http://sadasant.com/)"
+, "dependencies" :
+  { "express" : "2.5.4"
+  , "jade" : "0.20.x"
+  , "stylus" : "0.22.x"
+  , "connect-redis" : "1.x"
+  , "node-markdown" : "0.1.x"
+  }
+, "main" : "./talk.js"
+, "engines" : {
+    "node" : "0.6.x"
+  , "npm" : "1.1.x"
+  }
+, "license" :
+  { "type" : "MIT"
+  , "url" : "https://github.com/sadasant/TALK/blob/master/LICENSE"
+  }
 }

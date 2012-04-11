@@ -1,0 +1,281 @@
+body {
+  background: #333;
+  padding: 0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+a {
+  color: #47ac39;
+}
+a:hover {
+  color: #326326;
+}
+h1 {
+  color: #47ac39;
+  font-size: 55px;
+  text-shadow: 1px 1px 0 #000;
+  margin-bottom: 20px;
+}
+h1 a {
+  color: inherit;
+  text-decoration: none;
+}
+h2 {
+  color: #666;
+  text-shadow: 1px 1px 0 #000;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+#body,
+#footer {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -17px;
+  text-align: center;
+  color: #ddd;
+  letter-spacing: 1px;
+}
+#body input[type="button"],
+#footer input[type="button"],
+#body input[type="submit"],
+#footer input[type="submit"] {
+  color: #222;
+  font-weight: bold;
+  text-shadow: 1px 1px 0 #444;
+  background: #393939;
+  border: 1px solid #444;
+  border-top: 1px solid #555;
+  cursor: pointer;
+  cursor: hand;
+  padding: 3px 10px;
+  width: auto;
+  font-size: 14px;
+  letter-spacing: 2px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+}
+#body input,
+#footer input,
+#body textarea,
+#footer textarea {
+  background: #2d2d2d;
+  width: auto;
+  border: 1px solid #444;
+  border-top: 1px solid #555;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+  color: #999;
+}
+#body input[type="button"]:hover,
+#footer input[type="button"]:hover,
+#body input[type="submit"]:hover,
+#footer input[type="submit"]:hover {
+  background: #444744;
+  border: 1px solid #555;
+  border-top: 1px solid #666;
+}
+#body .description p,
+#footer .description p {
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#body #content,
+#footer #content {
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 25px;
+  width: auto;
+  max-width: 400px;
+  border: 1px solid #222;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+}
+#body #content .post:first-child .user,
+#footer #content .post:first-child .user {
+  -webkit-border-radius: 5px 5px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  -o-border-radius: 5px 5px 0 0;
+  -ms-border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
+  border-top: 0px;
+}
+#body #content .post:last-child .post-post,
+#footer #content .post:last-child .post-post {
+  -webkit-border-radius: 0 0 5px 5px;
+  -moz-border-radius: 0 0 5px 5px;
+  -o-border-radius: 0 0 5px 5px;
+  -ms-border-radius: 0 0 5px 5px;
+  border-radius: 0 0 5px 5px;
+}
+#body #content .post .user,
+#footer #content .post .user,
+#body #content .post .post-post,
+#footer #content .post .post-post {
+  width: auto;
+  max-width: 380px;
+}
+#body #content .post .user,
+#footer #content .post .user {
+  background: #383838;
+  color: #326326;
+  font-weight: bold;
+  text-align: center;
+  overflow: hidden;
+  text-align: left;
+  padding: 1px 10px;
+  border-top: 1px solid #222;
+  font-size: 10px;
+}
+#body #content .post .user .date,
+#footer #content .post .user .date {
+  float: right;
+  margin-top: 1px;
+}
+#body #content .post .post-post,
+#footer #content .post .post-post {
+  background: #333;
+  padding: 6px 10px 12px 10px;
+  overflow: hidden;
+  color: #47ac39;
+}
+#body #content .post .post-post p,
+#footer #content .post .post-post p {
+  margin: 0;
+}
+#body #content .post .post-post blockquote,
+#footer #content .post .post-post blockquote {
+  padding: 10px;
+  margin-left: -10px;
+  border-left: 1px solid #36642f;
+  color: #999;
+  background: #304030;
+  width: 380px;
+}
+#body #content .post .post-post li,
+#footer #content .post .post-post li {
+  margin-left: -20px;
+}
+#body #content .post .post-post pre code,
+#footer #content .post .post-post pre code {
+  color: #999;
+  font-size: 11px;
+}
+#body #content .post .post-post pre,
+#footer #content .post .post-post pre {
+  border-left: 1px solid #111;
+  background: #2d2d2d;
+  width: 380px;
+  margin-left: -10px;
+  padding: 10px;
+}
+#body #content .post .post-post pre:hover,
+#footer #content .post .post-post pre:hover {
+  overflow-x: scroll;
+}
+#body #content .post .post-post img,
+#footer #content .post .post-post img {
+  min-width: 50px;
+  min-height: 50px;
+  max-width: 100px;
+  max-height: 100px;
+}
+#body #content .you .user,
+#footer #content .you .user {
+  background: #2d2d2d;
+  color: #666;
+}
+#body #content .you .post-post,
+#footer #content .you .post-post {
+  color: #ddd;
+}
+#body .controls,
+#footer .controls {
+  margin-top: 0px;
+  max-width: 404px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#body .controls input,
+#footer .controls input {
+  min-width: auto;
+  margin: 0;
+  margin-top: 3px;
+  margin-bottom: 5px;
+}
+#body .controls #send,
+#footer .controls #send,
+#body .controls #load,
+#footer .controls #load,
+#body .controls #auto,
+#footer .controls #auto {
+  width: 33%;
+}
+#body .controls #send,
+#footer .controls #send {
+  -webkit-border-radius: 5px 0 0 5px;
+  -moz-border-radius: 5px 0 0 5px;
+  -o-border-radius: 5px 0 0 5px;
+  -ms-border-radius: 5px 0 0 5px;
+  border-radius: 5px 0 0 5px;
+  border-right: 0;
+}
+#body .controls #load,
+#footer .controls #load {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -o-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
+  border-right: 0;
+}
+#body .controls #auto,
+#footer .controls #auto {
+  -webkit-border-radius: 0 5px 5px 0;
+  -moz-border-radius: 0 5px 5px 0;
+  -o-border-radius: 0 5px 5px 0;
+  -ms-border-radius: 0 5px 5px 0;
+  border-radius: 0 5px 5px 0;
+}
+#body .controls #load:hover,
+#footer .controls #load:hover,
+#body .controls #auto:hover,
+#footer .controls #auto:hover {
+  border-left-color: #444;
+}
+#body .controls textarea,
+#footer .controls textarea {
+  resize: none;
+  width: 99%;
+  min-height: 50px;
+  text-shadow: none;
+}
+#body #error,
+#footer #error {
+  width: 100px;
+  margin: 5px auto 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+  padding: 5px;
+  color: #666;
+  font-size: 10px;
+}
+#footer {
+  font-size: 11px;
+}

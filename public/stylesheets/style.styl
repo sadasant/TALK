@@ -1,0 +1,178 @@
+vendors = webkit moz o ms official
+
+border-radius()
+  for v in vendors
+    if v == official
+      border-radius arguments
+    else
+      -{v}-border-radius arguments
+
+body
+  background #333
+  padding 0
+  font 14px "Lucida Grande", Helvetica, Arial, sans-serif
+a
+  color #47ac39
+a:hover
+  color #326326
+
+h1
+  color #47ac39
+  font-size 55px
+  text-shadow 1px 1px 0 #000
+  a
+    color inherit
+    text-decoration none
+  margin-bottom 20px
+
+h2
+  color #666
+  text-shadow 1px 1px 0 #000
+
+.left
+  float left
+.right
+  float right
+
+#body,#footer
+  margin-left auto
+  margin-right auto
+  margin-top -17px
+  text-align center
+  color #ddd
+  letter-spacing 1px
+  input[type="button"], input[type="submit"]
+    color #222
+    font-weight bold
+    text-shadow 1px 1px 0 #444
+    background #393939
+    border 1px solid #444
+    border-top 1px solid #555
+    cursor pointer
+    cursor hand
+    padding 3px 10px
+    width auto
+    font-size 14px
+    letter-spacing 2px
+    border-radius 5px
+  input, textarea
+    background #2d2d2d
+    width auto
+    border 1px solid #444
+    border-top 1px solid #555
+    border-radius 5px
+    color #999
+  input[type="button"]:hover, input[type="submit"]:hover
+    background #444744
+    border 1px solid #555
+    border-top 1px solid #666
+  .description
+    p
+      width 200px
+      margin-left auto
+      margin-right auto
+  #content
+    text-align left
+    margin-left auto
+    margin-right auto
+    margin-bottom 25px
+    width auto
+    max-width 400px
+    border 1px solid #222
+    border-radius 5px
+    .post:first-child .user
+      border-radius 5px 5px 0 0
+      border-top 0px
+    .post:last-child .post-post
+      border-radius 0 0 5px 5px
+    .post
+      .user,.post-post
+        width auto
+        max-width 380px
+      .user
+        background #383838
+        color #326326
+        font-weight bold
+        text-align center
+        overflow hidden
+        text-align left
+        padding 1px 10px
+        border-top 1px solid #222
+        font-size 10px
+        .date
+          float right
+          margin-top 1px
+      .post-post
+        background #333
+        padding 6px 10px 12px 10px
+        overflow hidden
+        color #47ac39
+        p
+          margin 0
+        blockquote
+          padding 10px
+          margin-left -10px
+          border-left 1px solid #36642F
+          color #999
+          background #304030
+          width 380px
+        li
+          margin-left -20px
+        pre code
+          color #999
+          font-size 11px
+        pre
+          border-left 1px solid #111
+          background #2d2d2d
+          width 380px
+          margin-left -10px
+          padding 10px
+        pre:hover
+          overflow-x scroll
+        img
+          min-width 50px
+          min-height 50px
+          max-width 100px
+          max-height 100px
+    .you
+      .user
+        background #2d2d2d
+        color #666
+      .post-post
+        color #ddd
+  .controls
+    margin-top 0px
+    max-width 404px
+    margin-left auto
+    margin-right auto
+    input
+      min-width auto
+      margin 0
+      margin-top 3px
+      margin-bottom 5px
+    #send,#load,#auto
+      width 33%
+    #send
+      border-radius 5px 0 0 5px
+      border-right 0
+    #load
+      border-radius 0
+      border-right 0
+    #auto
+      border-radius 0 5px 5px 0
+    #load:hover, #auto:hover
+      border-left-color #444
+    textarea
+      resize none
+      width 99%
+      min-height 50px
+      text-shadow none
+  #error
+    width 100px
+    margin 5px auto 10px
+    border-radius 5px
+    padding 5px
+    color #666
+    font-size 10px
+#footer
+  font-size 11px

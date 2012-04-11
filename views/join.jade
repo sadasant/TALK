@@ -1,0 +1,16 @@
+h1
+  a(href="/") TALK
+h2 JOIN #{chat.name}
+form#join(action="/join", method="post")
+  input(type="hidden", name="name", value=chat.name)
+  b Password
+  br
+  input(type="password", name="password")
+  br
+  br
+  b User Name
+  br
+  input(type="textbox", name="user_name", value= user.name)
+  br
+  br
+  input(type="submit", value="Join")
