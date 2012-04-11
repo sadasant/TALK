@@ -8,7 +8,6 @@
   { "express" : "2.5.4"
   , "jade" : "0.20.x"
   , "stylus" : "0.22.x"
-  , "connect-redis" : "1.x"
   , "node-markdown" : "0.1.x"
   }
 , "main" : "./talk.js"
