@@ -79,16 +79,14 @@ window.onload = function() {
 
   // Post is sent
   function sentPost(ok, data) {
-    if (!data) return
     if (ok && data === 'ok') {
       sent++
       $textarea.value  = ''
       $error.innerHTML = ''
       if (!loop) getPosts()
     } else {
-      var error
-      try { error = JSON.parse(data).error }
-      catch(e) {}
+      if (data.length < 3) return
+      var error = JSON.parse(data).error
       if (error) {
         $error.innerHTML = error
       }
@@ -105,16 +103,16 @@ window.onload = function() {
       , loop : loop
       }
     if (!loop) $error.innerHTML = 'loading...'
+    if (SX) SX.abort()
     SX = S.ajax('POST', URL+"/load", U, data, gotPosts)
   }
 
   // Got posts
   function gotPosts(ok, data) {
-    if (!(ok || data)) return
+    if (!data) return
     // Good response, create the posts
     if (ok) {
-      try { data = JSON.parse(data) }
-      catch(e) {}
+      data = JSON.parse(data)
       if (data.length >= 0) {
         for (var post, i = 0, l = data.length; i < l; i++) {
           if (post = data[i]) {
@@ -123,7 +121,7 @@ window.onload = function() {
           }
         }
         // Cleaning the content
-        if (data.length && !last) $content.removeChild($content.lastChild)
+        if (!last) $content.removeChild($content.lastChild)
         // Updating the Title
         received -= sent
         sent = 0
