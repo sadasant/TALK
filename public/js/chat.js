@@ -106,10 +106,15 @@ window.onload = function() {
 
   // Got posts
   function gotPosts(ok, data) {
-    if (!data) return
-    // Good response, create the posts
+    // Good response
     if (ok) {
+      if (!data) {
+        // It timed out...
+        busy.load = false
+        return loop && getPosts()
+      }
       data = JSON.parse(data)
+      // Create the posts
       if (data.length >= 0) {
         for (var post, i = 0, l = data.length; i < l; i++) {
           if (post = data[i]) {
