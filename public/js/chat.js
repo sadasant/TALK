@@ -118,7 +118,7 @@ window.onload = function() {
           }
         }
         // Cleaning the content
-        if (!last) $content.removeChild($content.lastChild)
+        if (data.length && !last) $content.removeChild($content.lastChild)
         // Updating the Title
         received -= sent
         sent = 0
