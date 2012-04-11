@@ -166,6 +166,8 @@ window.onload = function() {
   function autoLoad() {
     if (loop) {
       loop = false
+      busy.load = false
+      busy.post = false
       SX.abort()
       $auto.setAttribute('value', 'Auto Load')
     } else {
