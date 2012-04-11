@@ -2,9 +2,6 @@
 // By Daniel R. (sadasant.com)
 // License: http://opensource.org/licenses/mit-license.php
 
-// If sadasant.com failed, load our local copy of S.js
-//!window.S && document.write(unescape('%3Cscript src="/js/S.js"%3E%3C/script%3E'))
-
 window.onload = function() {
 
   // Global Bindings
