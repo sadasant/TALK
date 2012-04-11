@@ -42,7 +42,7 @@
 	// AJAX
 	S.ajax = function(t, u, h, d, f, X) {
 		X = S.xhr()
-		X.onreadystatechange = X.onerror = function() {
+		X.onreadystatechange = function() {
 			X.readyState === 4 && f && f(X.status < 300, X.responseText, X)
 		}
 		X.open(t, u, true)
