@@ -32,7 +32,7 @@ window.onload = function() {
     , $remo = S.q('#remo')[0]
 
   // S.xhr
-    , SX
+    , X
 
 
   // Binding all the buttons and inputs
@@ -100,8 +100,8 @@ window.onload = function() {
       , loop : loop
       }
     if (!loop) $error.innerHTML = 'loading...'
-    if (SX) SX.abort()
-    SX = S.ajax('POST', URL+"/load", U, data, gotPosts)
+    if (X) X.abort()
+    X = S.ajax('POST', URL+"/load", U, data, gotPosts)
   }
 
   // Got posts
@@ -117,7 +117,8 @@ window.onload = function() {
       // Create the posts
       if (data.length >= 0) {
         for (var post, i = 0, l = data.length; i < l; i++) {
-          if (post = data[i]) {
+          if (data[i]) {
+            post = data[i]
             received++
             createPost(post)
           }
@@ -173,8 +174,8 @@ window.onload = function() {
       loop = false
       busy.load = false
       busy.post = false
-      SX.abort()
-      SX = U
+      X.abort()
+      X = U
       $auto.setAttribute('value', 'Auto Load')
     } else {
       loop = true
