@@ -1,17 +1,17 @@
-// TALK / server.js
-// By Daniel R. (sadasant.com)
-// License: http://opensource.org/licenses/mit-license.php
+// sadasant.com/license
 
-  // Libraries
+//  Libraries
 var express = require('express')
   , Markdown = require('node-markdown').Markdown
 
-  // Variables
+//  Variables
   , talk = module.exports = express.createServer()
   , TODAY = (new Date()).getDay()
   , CHATS = {}
   , COUNT = { chats: 0, users: 0 }
   , FORBIDDEN = ['new', 'join']
+  , validCharacters = /[^ a-zA-Z0-9]/
+  , port = process.env['app_port'] || 3000
 
 // Reset Main Variables
 function reset(req, res, next) {
@@ -31,7 +31,7 @@ talk.configure(function() {
   talk.use(express.methodOverride())
   talk.use(require('stylus').middleware({ src: __dirname + '/public' }))
   talk.use(express.cookieParser())
-  talk.use(express.session({ secret : "1337" /*, store: sessions*/ }))
+  talk.use(express.session({ secret : "1337" }))
   talk.use(talk.router)
   talk.use(express.static(__dirname + '/public'))
   talk.use(express.errorHandler())
@@ -41,12 +41,11 @@ talk.configure(function() {
 talk.get('/', reset, function(req, res) {
   var user = req.session.user
   if (!user) {
-    var date = new Date()
     user = req.session.user = {
       chats : []
     , id : COUNT.users
-    , name : "User "+COUNT.users++
-    , date : date
+    , name : "User " + COUNT.users++
+    , date : new Date()
     }
   }
   res.render('index', { user : user })
@@ -56,22 +55,24 @@ talk.get('/', reset, function(req, res) {
 talk.post('/new', function(req, res) {
   var name = req.body.name
     , pass = req.body.password
-    , user_name = req.body.user_name.replace(/</g,'&#60;') // Amateur XSS fix
+    , user_name = req.body.user_name.replace(/</g,'&#60;') // XSS fix
     , user = req.session.user
-  // Must be in
+    , chat
+  // User shall exist
+  // and the requested chat must be not forbidden
   if (!user || ~FORBIDDEN.indexOf(name)) {
     return res.render('error', { ERROR: 'FORBIDDEN' })
   } else
-  // This chat exists
+  // Fail if the requested chat exists
   if (CHATS[name]) {
     return res.render('error', { ERROR: 'I have a chat with that name' })
   }
   // Invalid characters
-  if (~name.indexOf('/')) {
+  if (~name.search(validCharacters)) {
     return res.render('error', { ERROR: 'Invalid characters in the chat name' })
   }
   // Chat Scheme
-  var chat = {
+  chat = {
     id : COUNT.chats++
   , name : name
   , pass : pass
@@ -80,6 +81,7 @@ talk.post('/new', function(req, res) {
   , date : new Date()
   }
   CHATS[name] = chat
+  // Replace the user name
   if (user_name) user.name = user_name
   user.chats.push(chat.id)
   res.redirect("/"+name)
@@ -89,19 +91,26 @@ talk.post('/new', function(req, res) {
 talk.post('/join', reset, function(req, res) {
   var name = req.body.name
     , pass = req.body.password
-    , user_name = req.body.user_name.replace(/</g,'&#60;') // Amateur XSS fix
+    , user_name = req.body.user_name.replace(/</g,'&#60;') // XSS fix
     , user = req.session.user
     , chat = CHATS[name]
+  // Nor the user nor the chat exist
   if (!(user && chat)) {
     return res.render('error', { ERROR: 'FORBIDDEN' })
   } else
+  // The user have been in this chat
+  // redirecting to the chat
   if (~user.chats.indexOf(chat.id)) {
     return res.redirect("/"+name)
   } else
+  // The user wants to log in
+  // check the pass
   if (chat.pass === pass) {
     user.chats.push(chat.id)
     chat.n_of_users++
+    // Changing the user's name
     if (user_name) user.name = user_name
+    // Redirecting to the chat
     res.redirect("/"+name)
   } else {
     return res.render('error', { ERROR: 'FORBIDDEN' })
@@ -113,18 +122,20 @@ talk.get('/:name', function(req, res) {
   var chat = CHATS[req.params.name]
     , user = req.session.user
   if (chat) {
+    // The user have been in this chat
     if (user && ~user.chats.indexOf(chat.id)) {
       return res.render('chat', { title : 'TALK', chat : chat, user : user })
     } else {
+      // New user?
       if (!user) {
-        var date = new Date()
         user = req.session.user = {
           chats : []
         , id : COUNT.users
         , name : "User "+COUNT.users++
-        , date : date
+        , date : new Date()
         }
       }
+      // Join the chat
       return res.render('join', { chat : chat, user : user })
     }
   } else {
@@ -138,22 +149,26 @@ talk.post('/:name/post', reset, function(req, res) {
     , user = req.session.user
     , new_post = req.body.post
     , date = req.body.date
+    , post
+    , removable
+  // The user is in this chat?
   if (chat && user && ~user.chats.indexOf(chat.id) && new_post) {
-    // Limit posts lenght
+    // Limit post's lenght
     if (new_post.length > 1024) {
       return res.send({ error: 'too long'})
     }
     // Post Schema
-    var post = {
+    post = {
       date : date
-    , post : Markdown(new_post.replace(/</g,'&#60;')).replace(/&amp;#60;/g,'&#60;') // Amateur XSS fix
+    , post : Markdown(new_post.replace(/</g,'&#60;')).replace(/&amp;#60;/g,'&#60;') // XSS fix
     , user : user
     , pos  : chat.posts.length
     }
-    // Pushing new post
+    // Pushing the new post
     chat.posts.push(post)
-    // removing too old posts
-    var removable = chat.posts.length - (3*chat.n_of_users) // According to the ammount of users
+    // Removing too old posts
+    // according to the ammount of users
+    removable = chat.posts.length - (3*chat.n_of_users)
     if (removable > 0) delete chat.posts[removable-1]
     res.send('ok')
   } else {
@@ -168,31 +183,36 @@ talk.post('/:name/load', function(req, res) {
     , last = req.body.last
     , loop = req.body.loop == "true"
     , chat = CHATS[name]
+  // The user is in this chat?
   if (chat && user && ~user.chats.indexOf(chat.id)) {
-    slicePosts()
-    function slicePosts() {
-      // If the chat was removed while waiting...
-      var chat = CHATS[name]
-      if (loop && !chat) {
-        return res.send({ error : 'removed' })
-      }
-      // Send only the last posts
-      var last_limit = 3 * chat.n_of_users
-      if (last == 0 && chat.posts.length > last_limit) {
-        last += chat.posts.length - last_limit
-      }
-      var posts = chat.posts.slice(last)
-      // Send posts or continue the queue
-      if (posts.length || !loop) {
-        return res.send(posts)
-      } else {
-        setTimeout(slicePosts, 1000)
-      }
-    }
+    slicePosts(req, res, name, user, last, loop)
   } else {
     return res.send({ error : 'FORBIDDEN' })
   }
 })
+
+// Slice the last posts according to the request
+function slicePosts(req, res, name, user, last, loop) {
+  var chat = CHATS[name]
+    , last_limit
+    , posts
+  // The chat was removed while waiting?
+  if (loop && !chat) {
+    return res.send({ error : 'removed' })
+  }
+  // Send only the last posts
+  last_limit = 3 * chat.n_of_users
+  if (last == 0 && chat.posts.length > last_limit) {
+    last += chat.posts.length - last_limit
+  }
+  posts = chat.posts.slice(last)
+  // Send posts or continue the queue
+  if (posts.length || !loop) {
+    return res.send(posts)
+  } else {
+    setTimeout(slicePosts.bind(undefined, req, res, name, user, last, loop), 1000)
+  }
+}
 
 // Remove Chat
 talk.get('/:name/rm', function(req, res) {
@@ -213,6 +233,5 @@ talk.error(function(req, res) {
   return res.render('error', { ERROR: 'FORBIDDEN' })
 })
 
-var port = process.env['app_port'] || 3000
 talk.listen(port)
 console.log("Running at http://localhost:"+port+"/")

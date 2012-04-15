@@ -1,6 +1,4 @@
-// TALK / public / js / chat.js
-// By Daniel R. (sadasant.com)
-// License: http://opensource.org/licenses/mit-license.php
+// sadasant.com/license
 
 window.onload = function() {
 
@@ -21,17 +19,17 @@ window.onload = function() {
     , confirm_remove = false
 
   // Areas
-    , $content  = S.q('#content')[0]
-    , $textarea = S.q('textarea')[0]
-    , $error    = S.q('#error')[0]
+    , $content  = S.q('#content')
+    , $textarea = S.q('textarea')
+    , $error    = S.q('#error')
 
   // Buttons
-    , $send = S.q('#send')[0]
-    , $load = S.q('#load')[0]
-    , $auto = S.q('#auto')[0]
-    , $remo = S.q('#remo')[0]
+    , $send = S.q('#send')
+    , $load = S.q('#load')
+    , $auto = S.q('#auto')
+    , $remo = S.q('#remo')
 
-  // S.xhr
+  // XHR
     , X
 
 
@@ -71,7 +69,7 @@ window.onload = function() {
       , date : new Date().toString()
       }
     $error.innerHTML = 'loading...'
-    S.ajax('POST', URL+"/post", U, data, sentPost)
+    S.req('POST', URL+"/post", U, data, sentPost)
   }
 
   // Post is sent
@@ -101,7 +99,7 @@ window.onload = function() {
       }
     if (!loop) $error.innerHTML = 'loading...'
     if (X) X.abort()
-    X = S.ajax('POST', URL+"/load", U, data, gotPosts)
+    X = S.req('POST', URL+"/load", U, data, gotPosts)
   }
 
   // Got posts
@@ -114,6 +112,8 @@ window.onload = function() {
         return loop && getPosts()
       }
       data = JSON.parse(data)
+      // Wong response, getting out of here
+      if (data.error) return goToHome()
       // Create the posts
       if (data.length >= 0) {
         for (var post, i = 0, l = data.length; i < l; i++) {
@@ -131,10 +131,6 @@ window.onload = function() {
         D.title = (received ? "("+received+") " : "") + "TALK: " + CHAT.name
         if (post) last = post.pos + 1 // We're on the last post
         $error.innerHTML = ''
-      } else
-      // Wong response, getting out of here
-      if (data.error) {
-        W.location = "/"
       }
       busy.load = false
       // Restart?
@@ -170,10 +166,9 @@ window.onload = function() {
 
   // Toggles long-polling
   function autoLoad() {
+    busy.load = false
     if (loop) {
       loop = false
-      busy.load = false
-      busy.post = false
       X.abort()
       X = U
       $auto.setAttribute('value', 'Auto Load')
@@ -190,10 +185,13 @@ window.onload = function() {
       $remo.setAttribute('value', 'Are you sure?')
       confirm_remove = true
     } else {
-      S.ajax('GET', URL+"/rm", U, U, function() {
-        W.location = "/"
-      })
+      S.req('GET', URL+"/rm", U, U, goToHome)
     }
+  }
+
+  // Go to Home
+  function goToHome() {
+    W.location = "/"
   }
 
 }
