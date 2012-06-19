@@ -129,7 +129,7 @@ window.onload = function() {
         received -= sent
         sent = 0
         D.title = (received ? "("+received+") " : "") + "TALK: " + CHAT.name
-        if (post) last = post.pos + 1 // We're on the last post
+        if (post) last = post.position + 1 // We're on the last post
         $error.innerHTML = ''
       }
       busy.load = false
