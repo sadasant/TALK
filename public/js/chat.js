@@ -106,12 +106,20 @@ window.onload = function() {
 
   // Got posts
   function gotPosts(ok, data) {
-    if (!data) return
+    var post
     // Good response, create the posts
     if (ok) {
-      data = JSON.parse(data)
-      if (data.length >= 0) {
-        for (var post, i = 0, l = data.length; i < l; i++) {
+      if (!data) {
+        busy.load = false
+        autoLoad()
+        //return loop && getPosts()
+      }
+      try { data = JSON.parse(data) } catch(e) {
+        busy.load = false
+        return loop && getPosts()
+      }
+      if (data.length > 0) {
+        for (post, i = 0, l = data.length; i < l; i++) {
           if (post = data[i]) {
             received++
             createPost(post)
@@ -123,14 +131,14 @@ window.onload = function() {
         received -= sent
         sent = 0
         D.title = (received ? "("+received+") " : "") + "TALK: " + CHAT.name
-        if (post) last = post.pos + 1 // We're on the last post
-        $error.innerHTML = ''
+        if (post) last = post.position + 1 // We're on the last post
       } else
       // Wong response, getting out of here
       if (data.error) {
         W.location = "/"
       }
       busy.load = false
+      $error.innerHTML = ''
       // Restart?
       if (loop) getPosts()
     } else {
@@ -143,10 +151,10 @@ window.onload = function() {
   // Create post, used in gotPosts
   function createPost(post) {
     var html = ''
-      + '<div class="post '+(USER.id == post.user.id ? 'you' : '')+'" name="'+post.pos+'">'
+      + '<div class="post '+(USER.id == post.user.id ? 'you' : '')+'" name="'+post.position+'">'
       +   '<div class="user" data-id="'+post.user.id+'" data-name="'+post.user.name+'">'
       +     post.user.name
-      +     '<small class="date">'+post.date.split(' ')[4]+'</small>'
+      +     '<small class="date">'+post.client.date.split(' ')[4]+'</small>'
       +   '</div>'
       +   '<div class="post-post" data-date="'+post.date+'">'
       +     post.post

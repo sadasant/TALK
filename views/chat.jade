@@ -3,7 +3,7 @@ h1
   =": "
   a(href="/"+chat.name)= chat.name
 .controls
-  textarea(placeholder="Send with CTRL + ENTER")#new_post
+  textarea(placeholder="Send with CTRL + ENTER", maxlength=1024)#new_post
   input#send(type="button", value="Send")
   input#load(type="button", value="Load")
   input#auto(type="button", value="Auto Load")
