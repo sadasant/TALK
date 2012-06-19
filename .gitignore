@@ -1,1 +1,9 @@
+# OS and editor files
+.node_history
+
+# npm
+node_modules
+npm-debug.log
+
+# Nodester
 .nodester.appconfig
