@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 // TALK / public / js / chat.js
 // By Daniel R. (sadasant.com)
 // License: http://opensource.org/licenses/mit-license.php
+=======
+// sadasant.com/license
+>>>>>>> ad85c9e0bb03a9e42345b99e0bf870f01e079366
 
 window.onload = function() {
 
@@ -21,6 +25,7 @@ window.onload = function() {
     , confirm_remove = false
 
   // Areas
+<<<<<<< HEAD
     , $content  = S.q('#content')[0]
     , $textarea = S.q('textarea')[0]
     , $error    = S.q('#error')[0]
@@ -33,6 +38,20 @@ window.onload = function() {
 
   // S.xhr
     , SX
+=======
+    , $content  = S.q('#content')
+    , $textarea = S.q('textarea')
+    , $error    = S.q('#error')
+
+  // Buttons
+    , $send = S.q('#send')
+    , $load = S.q('#load')
+    , $auto = S.q('#auto')
+    , $remo = S.q('#remo')
+
+  // XHR
+    , X
+>>>>>>> ad85c9e0bb03a9e42345b99e0bf870f01e079366
 
 
   // Binding all the buttons and inputs
@@ -71,7 +90,11 @@ window.onload = function() {
       , date : new Date().toString()
       }
     $error.innerHTML = 'loading...'
+<<<<<<< HEAD
     S.ajax('POST', URL+"/post", U, data, sentPost)
+=======
+    S.req('POST', URL+"/post", U, data, sentPost)
+>>>>>>> ad85c9e0bb03a9e42345b99e0bf870f01e079366
   }
 
   // Post is sent
@@ -100,35 +123,39 @@ window.onload = function() {
       , loop : loop
       }
     if (!loop) $error.innerHTML = 'loading...'
-    if (SX) SX.abort()
-    SX = S.ajax('POST', URL+"/load", U, data, gotPosts)
+    if (X) X.abort()
+    X = S.req('POST', URL+"/load", U, data, gotPosts)
   }
 
   // Got posts
   function gotPosts(ok, data) {
-    if (!data) return
-    // Good response, create the posts
+    // Good response
     if (ok) {
+      if (!data) {
+        // It timed out...
+        busy.load = false
+        return loop && getPosts()
+      }
       data = JSON.parse(data)
+      // Wong response, getting out of here
+      if (data.error) return goToHome()
+      // Create the posts
       if (data.length >= 0) {
         for (var post, i = 0, l = data.length; i < l; i++) {
-          if (post = data[i]) {
+          if (data[i]) {
+            post = data[i]
             received++
             createPost(post)
           }
         }
         // Cleaning the content
-        if (!last) $content.removeChild($content.lastChild)
+        if (data.length && !last) $content.removeChild($content.lastChild)
         // Updating the Title
         received -= sent
         sent = 0
         D.title = (received ? "("+received+") " : "") + "TALK: " + CHAT.name
         if (post) last = post.pos + 1 // We're on the last post
         $error.innerHTML = ''
-      } else
-      // Wong response, getting out of here
-      if (data.error) {
-        W.location = "/"
       }
       busy.load = false
       // Restart?
@@ -164,9 +191,11 @@ window.onload = function() {
 
   // Toggles long-polling
   function autoLoad() {
+    busy.load = false
     if (loop) {
       loop = false
-      SX.abort()
+      X.abort()
+      X = U
       $auto.setAttribute('value', 'Auto Load')
     } else {
       loop = true
@@ -181,10 +210,13 @@ window.onload = function() {
       $remo.setAttribute('value', 'Are you sure?')
       confirm_remove = true
     } else {
-      S.ajax('GET', URL+"/rm", U, U, function() {
-        W.location = "/"
-      })
+      S.req('GET', URL+"/rm", U, U, goToHome)
     }
+  }
+
+  // Go to Home
+  function goToHome() {
+    W.location = "/"
   }
 
 }

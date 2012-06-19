@@ -26,11 +26,11 @@ Install all the dependencies with `npm`
 
     npm install
 
-Then run **TALK** main server file with `node`
+Then run **TALK** main file with `node`
 
-    node server.js
+    node talk.js
 
-And finally open <http://localhost:14774/> on your browser.
+It will log the URL you must open on your browser to test TALK.
 
 License
 ------------
