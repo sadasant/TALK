@@ -27,7 +27,7 @@ models.Chat = (function() {
     //  attributes we care and with functions
     //  inside the scope.
     var chat = {
-      id      : TALK.stats.chats.count++
+      id      : TALK.stats.chats++
     , name    : name
     , pass    : pass
     , posts   : []
@@ -69,7 +69,7 @@ models.Chat = (function() {
 models.User = (function() {
 
   return function(name) {
-    var count = TALK.stats.users.count++
+    var count = TALK.stats.users++
     var user = {
       id      : ''+count
     , name    : name || "User "+count

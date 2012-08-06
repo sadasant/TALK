@@ -24,7 +24,7 @@ module.exports = function(_TALK) {
 
 // Reset Main Variables
 function reset(req, res, next) {
-  if ((new Date()).getDay() !== TALK.settings.today) {
+  if (req.query.reset || (new Date()).getDay() !== TALK.settings.today) {
     TALK.settings.today = (new Date()).getDay()
     TALK.collections.flush()
     TALK.stats.flush()

@@ -19,9 +19,16 @@ module.exports = function(_TALK) {
 // Index
 controller.index = function(req, res) {
   var user = getUser(req)
+    , json = req.query.json
+
   if (!user) {
     user = req.session.user = new TALK.models.User()
   }
+
+  if (json) {
+    return res.json(user)
+  }
+
   res.render('index', { user : user })
 }
 
@@ -50,6 +57,9 @@ controller.chat_new = function(req, res) {
 
   // Chat Scheme
   user.addChat(new TALK.models.Chat(name, pass))
+
+  // Replace current user name
+  if (user_name) user.name = user_name
 
   res.redirect("/"+name)
 }

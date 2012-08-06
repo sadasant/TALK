@@ -1,20 +1,18 @@
-module.exports = function(TALK) {
-  TALK.collections = {
+var CHATS = {}
+  , USERS = {}
+  , TALK
+
+
+module.exports = function(_TALK) {
+  TALK = _TALK
+  _TALK.collections = {
     chats : CHATS
   , users : USERS
   , flush : flush
   }
 }
 
-var CHATS = {}
-  , USERS = {}
-
-function flush() {
-  USERS.length = 0
-
-  for (var k in CHATS) {
-    delete CHATS[k]
-  }
-
-  CHATS = {}
+function flush(k) {
+  TALK.collections.users = {}
+  TALK.collections.chats = {}
 }
